@@ -4,6 +4,8 @@
   "description": "A framework for releasing a story in tiny chunks.",
   "main": "app.js",
   "scripts": {
+    "start": "pm2 start app.js --name serialmicro --watch",
+    "stop": "pm2 delete serialmicro",
     "test": "eslint . --fix"
   },
   "repository": {
@@ -22,6 +24,7 @@
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",
     "mongodb": "^3.6.3",
+    "pm2": "^4.5.2",
     "pug": "^3.0.0"
   }
 }
