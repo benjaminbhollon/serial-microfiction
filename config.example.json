@@ -7,6 +7,9 @@
 
   "title": "The Adventures of Sir Avocado",
   "author": "John Doe",
+  "synopsis": "A story about Sir Avocado and his trusty horse, Guacamole.",
+  "copyright": "© [[YEARS]] [[AUTHOR]]. All rights reserved.",
+  "startYear": 2021,
   "releasedOn": [
     "1",
     "3",
