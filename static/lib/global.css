@@ -1,0 +1,70 @@
+body {
+  font-size: 1.3em;
+  font-family: Courier, monospace;
+  background-color: #000;
+  color: lime;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 3.3em);
+  margin: 0;
+  margin-top: 3.3em;
+}
+
+footer {
+  text-align: center;
+  border-top: 2px solid;
+  margin-top: 2em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid;
+}
+
+.hidden {
+  display: none;
+}
+
+#content {
+  flex: 1 0 auto;
+  padding: 0.75em;
+}
+
+#story {
+  max-width: 700px;
+}
+
+a {
+  color: inherit;
+}
+
+/* Navbar */
+.main-nav {
+  border-bottom: 2px solid;
+  padding: 0.75em;
+  font-size: 1.2em;
+  background-color: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.main-nav a {
+  text-decoration: none;
+}
+
+.main-nav__title {
+  float: left;
+}
+
+.main-nav__author {
+  float: right;
+}
+
+
+::selection {
+  background-color: lime;
+  color: #000;
+}

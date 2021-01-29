@@ -6,6 +6,7 @@ html(lang="en")
       block variables
       block resources
         link(rel="stylesheet" href="/lib/global.css")
+        script(src="/lib/global.js" defer)
       block meta
         meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
@@ -19,9 +20,15 @@ html(lang="en")
       block title
         title #{title} | #{config.title} by #{config.author}
   body
+    span.hidden#releasedOn #{JSON.stringify(config.releasedOn)}
     block navbar
+      nav.main-nav
+        a.main-nav__title(href="/") #{config.title}
+        a.main-nav__author(href="/about-the-author/") #{config.author}
     #content
       block content
     block footer
       footer
         p #{config.copyright.replace("[[YEARS]]", config.startYear !== new Date().getFullYear() ? config.startYear + "-" + (new Date()).getFullYear() : config.startYear).replace("[[AUTHOR]]", config.author)}
+        p next flash in 
+          span#countdown

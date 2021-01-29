@@ -1,13 +1,18 @@
 extends layout.pug
 
+block variables
+  - title = "Home"
+  - metaDescription = config.synopsis
+
 block append resources
   script(src="/lib/homepage.js" defer)
 
 block content
-  span.hidden#releasedOn #{JSON.stringify(config.releasedOn)}
-  p next flash in 
-    span#countdown
-
-block variables
-  - title = "Home"
-  - metaDescription = config.synopsis
+  #story
+    #intro
+      p Greetings, and welcome to <em>#{config.title}</em>, a serial composed of microfiction by #{config.author}. What would you like to do today?
+      ul
+        li: a(href="#beginning") Start reading from the beginning
+        li: a(href="#latest") Read the latest flash
+        li: a(href="/about-the-author/") Learn more about #{config.author.split(" ")[0]}
+    hr#beginning
