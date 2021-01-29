@@ -1,0 +1,12 @@
+extends layout.pug
+
+block variables
+  - title = "Admin Dashboard"
+
+block content
+  h1 Admin Dasbhoard
+  h2 Add flash
+  form(method="POST" action="./post/")
+    label(for="content") Full text:
+    textarea(name="content" id="content" placeholder="Add markdown, HTML, or a mix...")
+    input(type="submit" value="Add")

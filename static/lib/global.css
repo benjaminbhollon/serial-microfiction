@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-size: 1.3em;
   font-family: Courier, monospace;
@@ -39,6 +43,36 @@ a {
   color: inherit;
 }
 
+::selection {
+  background-color: lime;
+  color: #000;
+}
+
+/* Forms */
+input, label, textarea, button {
+  display: block;
+  margin: 0;
+  width: 100%;
+  max-width: 500px;
+  padding: 0.5em;
+  background-color: inherit;
+  color: inherit;
+}
+
+::placeholder {
+  color: inherit;
+}
+
+input, textarea, button {
+  border: 2px solid;
+}
+
+label {
+  font-weight: bold;
+  padding-left: 0;
+}
+
+
 /* Navbar */
 .main-nav {
   border-bottom: 2px solid;
@@ -61,10 +95,4 @@ a {
 
 .main-nav__author {
   float: right;
-}
-
-
-::selection {
-  background-color: lime;
-  color: #000;
 }
