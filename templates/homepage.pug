@@ -1,0 +1,13 @@
+extends layout.pug
+
+block append resources
+  script(src="/lib/homepage.js" defer)
+
+block content
+  span.hidden#releasedOn #{JSON.stringify(config.releasedOn)}
+  p next flash in 
+    span#countdown
+
+block variables
+  - title = "Home"
+  - metaDescription = config.synopsis
