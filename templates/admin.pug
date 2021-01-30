@@ -3,10 +3,25 @@ extends layout.pug
 block variables
   - title = "Admin Dashboard"
 
+block append head
+  style.
+    .flash__content {
+      padding: 0 1em;
+    }
+
 block content
   h1 Admin Dasbhoard
+  details
+    summary Unpublished Flashes
+    each flash in flashes
+      article.flash
+        p
+          em Release date:
+          |  #{flash.date}
+        .flash__content
+          != md.render(flash.content)
   h2 Add flash
-  form(method="POST" action="./post/")
+  form(method="POST" action="./flash/")
     label(for="content") Full text:
     textarea(name="content" id="content" placeholder="Add markdown, HTML, or a mix...")
     input(type="submit" value="Add")
