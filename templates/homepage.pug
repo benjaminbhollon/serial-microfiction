@@ -16,3 +16,7 @@ block content
         li: a(href="#latest") Read the latest flash
         li: a(href="/about-the-author/") Learn more about #{config.author.split(" ")[0]}
     hr#beginning
+    each flash in flashes
+      article.flash
+        span.flash__date #{flash.date}
+        != flash.content

@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use('/admin/', basicAuth({ users: config.admins, challenge: true }));
 app.use((request, response, next) => {
   if (directory[request.path] !== undefined) {
-    return response.render(directory[request.path], { parameters: request.query, config, md });
+    return response.render(directory[request.path], { parameters: request.query, config });
   }
 
   if (next) return next();
@@ -36,10 +36,24 @@ app.use((request, response, next) => {
 app.set('view engine', 'pug');
 app.set('views', './templates');
 
+app.get('/', async (request, response) => {
+  //Get all published flashes
+  let flashes = [];
+  await crud.findMultipleDocuments('flashes', {date: {$lte: (new Date()).toISOString()}}).then((result) => {
+    if (result !== undefined) flashes = result;
+  });
+
+  response.render('homepage', {
+    config,
+    flashes,
+    md
+  });
+});
+
 app.get('/admin/', async (request, response) => {
   //Get all unpublished flashes
   let flashes = [];
-  await crud.findMultipleDocuments('flashes', {date: {$gt: (new Date).toISOString()}}).then((result) => {
+  await crud.findMultipleDocuments('flashes', {date: {$gt: (new Date()).toISOString()}}).then((result) => {
     if (result !== undefined) flashes = result;
   });
 
