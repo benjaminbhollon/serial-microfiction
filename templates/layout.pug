@@ -11,24 +11,24 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
         meta(name="description" content=metaDescription)
-        meta(name="author" content=config.author)
-        meta(property="og:title" content=title + " | " + config.title + " " + config.author)
+        meta(name="author" content=config.author.name)
+        meta(property="og:title" content=title + " | " + config.title + " " + config.author.name)
         meta(property="og:type" content="book")
         meta(property="og:book:author" content="website")
         meta(property="og:description" content=metaDescription)
         meta(property="og:image" content=metaImage)
       block title
-        title #{title} | #{config.title} by #{config.author}
+        title #{title} | #{config.title} by #{config.author.name}
   body
     span.hidden#releasedOn #{JSON.stringify(config.releasedOn)}
     block navbar
       nav.main-nav
         a.main-nav__title(href="/") #{config.title}
-        a.main-nav__author(href="/about-the-author/") #{config.author}
+        a.main-nav__author(href="/about-the-author/") #{config.author.name}
     #content
       block content
     block footer
       footer
-        p #{config.copyright.replace("[[YEARS]]", config.startYear !== new Date().getFullYear() ? config.startYear + "-" + (new Date()).getFullYear() : config.startYear).replace("[[AUTHOR]]", config.author)}
+        p #{config.copyright.replace("[[YEARS]]", config.startYear !== new Date().getFullYear() ? config.startYear + "-" + (new Date()).getFullYear() : config.startYear).replace("[[AUTHOR]]", config.author.name)}
         p next flash in 
           span#countdown

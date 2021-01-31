@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use('/admin/', basicAuth({ users: config.admins, challenge: true }));
 app.use((request, response, next) => {
   if (directory[request.path] !== undefined) {
-    return response.render(directory[request.path], { parameters: request.query, config });
+    return response.render(directory[request.path], { parameters: request.query, config, md });
   }
 
   if (next) return next();

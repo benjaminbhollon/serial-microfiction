@@ -6,7 +6,10 @@
   "port": 80,
 
   "title": "The Adventures of Sir Avocado",
-  "author": "John Doe",
+  "author": {
+    "name": "John Doe",
+    "about": "**Cool!** I can use _markdown_!"
+  },
   "synopsis": "A story about Sir Avocado and his trusty horse, Guacamole.",
   "copyright": "© [[YEARS]] [[AUTHOR]]. All rights reserved.",
   "startYear": 2021,

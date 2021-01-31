@@ -9,12 +9,12 @@ block append resources
 
 block content
   #story
-    #intro
-      p Greetings, and welcome to <em>#{config.title}</em>, a serial composed of microfiction by #{config.author}. What would you like to do today?
+    article#intro
+      p Greetings, and welcome to <em>#{config.title}</em>, a serial composed of microfiction by #{config.author.name}. What would you like to do today?
       ul
         li: a(href="#beginning") Start reading from the beginning
         li: a(href="#latest") Read the latest flash
-        li: a(href="/about-the-author/") Learn more about #{config.author.split(" ")[0]}
+        li: a(href="/about-the-author/") Learn more about #{config.author.name.split(" ")[0]}
     hr#beginning
     each flash in flashes
       article.flash(id=flash.date)
