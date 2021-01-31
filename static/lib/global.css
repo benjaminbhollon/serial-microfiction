@@ -96,13 +96,22 @@ label {
 .flash {
   margin: 1.5em 0;
   line-height: 1.4em;
+  position: relative;
 }
 
 .flash p {
   text-indent: 0.5in;
-  margin: 0;
+  margin: 0.5em 0;
 }
 
 .flash p:nth-of-type(1) {
   text-indent: 0;
+}
+
+.flash__date {
+  color: silver;
+  position: absolute;
+  right: -175px;
+  width: 175px;
+  padding-left: 1em;
 }
