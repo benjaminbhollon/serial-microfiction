@@ -5,6 +5,9 @@ block variables
 
 block append head
   style.
+    details {
+      max-width: 700px;
+    }
     .flash__content {
       padding: 0 1em;
     }
@@ -12,7 +15,7 @@ block append head
 block content
   h1 Admin Dasbhoard
   details
-    summary Unpublished Flashes
+    summary Unpublished Flashes (#{flashes.length})
     each flash in flashes
       article.flash
         p
@@ -22,6 +25,13 @@ block content
           != md.render(flash.content)
   h2 Add flash
   form(method="POST" action="./flash/")
-    label(for="content") Full text:
-    textarea(name="content" id="content" placeholder="Add markdown, HTML, or a mix...")
+    label(for="flashContent") Full text:
+    textarea(name="content" id="flashContent" placeholder="Add markdown, HTML, or a mix..." oninput="wordCount()")
+    p
+      span#words 0
+      |  words
     input(type="submit" value="Add")
+  script.
+    function wordCount() {
+      document.getElementById("words").innerText = document.getElementById("flashContent").value.split(/  \n| |\n\n/).length;
+    }

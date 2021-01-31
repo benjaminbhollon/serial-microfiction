@@ -18,5 +18,5 @@ block content
     hr#beginning
     each flash in flashes
       article.flash
-        span.flash__date #{flash.date}
-        != flash.content
+        //-span.flash__date #{flash.date}
+        != md.render(flash.content)

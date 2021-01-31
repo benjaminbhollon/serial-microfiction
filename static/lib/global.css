@@ -96,3 +96,18 @@ label {
 .main-nav__author {
   float: right;
 }
+
+/* Flashes */
+.flash {
+  margin: 1.5em 0;
+  line-height: 1.4em;
+}
+
+.flash p {
+  text-indent: 0.5in;
+  margin: 0;
+}
+
+.flash p:nth-of-type(1) {
+  text-indent: 0;
+}
