@@ -47,6 +47,19 @@ a {
   color: #000;
 }
 
+::-webkit-scrollbar {
+  width: 0.75em;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #202020;
+}
+
+::-webkit-scrollbar-thumb {
+  background: lime;
+  border-radius: 1em;
+}
+
 /* Forms */
 input, label, textarea, button {
   display: block;

@@ -105,3 +105,6 @@ dist
 
 # Config
 config.json
+
+# Models
+/static/lib/models/
