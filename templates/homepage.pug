@@ -3,6 +3,12 @@ extends layout.pug
 block variables
   - title = "Home"
   - metaDescription = config.synopsis
+  - daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  - releaseSchedule = config.releasedOn.map(day => (config.releasedOn[config.releasedOn.length - 1] === day && config.releasedOn.length > 1 ? "and " : "") + daysOfWeek[day]).join(", ")
+  if JSON.stringify(config.releasedOn) === "[0,1,2,3,4,5,6]"
+    - releaseSchedule = "day"
+  else if JSON.stringify(config.releasedOn) === "[1,2,3,4,5]"
+    - releaseSchedule = "weekday"
 
 block append resources
   script(src="/lib/homepage.js" defer)
@@ -23,3 +29,11 @@ block content
             span#latest
           span.flash__date #{flash.date}
           != md.render(flash.content)
+    hr
+    if (!cookies.choseConfig)
+      article#subscribe
+        p You've reached the end, but the story's not over. A new chunk of the story is released every #{releaseSchedule}. Want to get notified when the next part of the story is released?
+        a.button(href="javascript:emailPrefs('all')") Yes, please! Email me every time!
+        if (config.releasedOn.length > 1)
+          a.button(href="javascript:emailPrefs('weekly')") I'd prefer a weekly digest.
+        a.button(href="javascript:emailPrefs('none')") NO EMAILS PLS KTHXBYE

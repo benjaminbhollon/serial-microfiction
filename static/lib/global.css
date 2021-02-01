@@ -42,7 +42,7 @@ a {
 }
 
 /* Forms */
-input, label, textarea, button {
+input, label, textarea, button, a.button {
   display: block;
   margin: 0;
   width: 100%;
@@ -56,8 +56,13 @@ input, label, textarea, button {
   color: inherit;
 }
 
-input, textarea, button {
+input, textarea, button, a.button {
   border: 2px solid;
+}
+
+a.button {
+  text-align: center;
+  text-decoration: none;
 }
 
 label {
@@ -87,13 +92,14 @@ label {
 }
 
 /* Flashes */
-.flash {
+.flash, article {
   padding: 0.25em 0.75em;
 }
 
 .flash article {
   position: relative;
   line-height: 1.4em;
+  padding: 0;
 }
 
 .flash p {

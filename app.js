@@ -46,7 +46,8 @@ app.get('/', async (request, response) => {
   response.render('homepage', {
     config,
     flashes,
-    md
+    md,
+    cookies: request.cookies,
   });
 });
 
