@@ -85,6 +85,7 @@ app.post('/admin/flash/', async (request, response) => {
   const nextPostDue = new Date(lastPosted.getUTCFullYear(), lastPosted.getUTCMonth(), lastPosted.getUTCDate() + daysToAdd + 1);
 
   console.log("Right now is:\n", new Date(), "The last post was at:\n", lastPosted, "We need to add n days:\n", daysToAdd, "So the next post should be at:\n", nextPostDue, "The config is:\n", config);
+  console.log(lastPosted.getUTCFullYear(), lastPosted.getUTCMonth(), lastPosted.getUTCDate() + daysToAdd + 1, lastPosted.getUTCDate());
 
   let flash = {
     date: nextPostDue.toISOString().split("T")[0],
