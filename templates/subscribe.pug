@@ -1,0 +1,33 @@
+extends layout.pug
+
+block variables
+  - title = "Subscribe"
+  - metaDescription = `Subscribe to get email updates from the serial microfiction story ${config.title} by ${config.author}`
+  - daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  - releaseSchedule = config.releasedOn.map(day => (config.releasedOn[config.releasedOn.length - 1] === day && config.releasedOn.length > 1 ? "and " : "") + daysOfWeek[day]).join(", ")
+  if JSON.stringify(config.releasedOn) === "[0,1,2,3,4,5,6]"
+    - releaseSchedule = "day"
+  else if JSON.stringify(config.releasedOn) === "[1,2,3,4,5]"
+    - releaseSchedule = "weekday"
+  - freqDesc = "every time there's something new"
+  if frequency === 'weekly'
+    - freqDesc = "once a week with the new flashes"
+
+block content
+  article
+    if !success
+      h1 Subscribe for Updates
+      p A new chunk of the <em>#{config.title}</em> story is released every #{releaseSchedule}. Subscribe here to get an email #{freqDesc}! You'll be able to unsubscribe at any time.
+      form(method="POST")
+        label Your email:
+          input(type="email" name="email" placeholder="smart@cookie.com" autofocus required)
+        label
+          input(type="checkbox" name="agree" required)
+          | I agree to receive #{frequency} updates from <em>#{config.title}</em> to the email address specified above.
+        input(type="submit" value="Sign me up!")
+      if err
+        p.error #{err}
+    else if success === true
+      h1 Success!
+      p You'll be receiving email updates #{freqDesc}! We sent you an email to confirm. Make sure you get it; if it shows up in your spam folder, move it out or you won't get our updates!
+      a.button(href="/") Home

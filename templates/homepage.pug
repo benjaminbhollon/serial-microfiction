@@ -11,6 +11,7 @@ block variables
     - releaseSchedule = "weekday"
 
 block append resources
+  script(src="/lib/jquery.min.js" async)
   script(src="/lib/homepage.js" defer)
 
 block content
@@ -23,17 +24,18 @@ block content
         li: a(href="/about-the-author/") Learn more about #{config.author.name.split(" ")[0]}
     hr#beginning
     each flash in flashes
-      div.flash(id=flash.date data-latest=flash === flashes[flashes.length - 1])
-        article
-          if flash === flashes[flashes.length - 1]
-            span#latest
-          span.flash__date #{flash.date}
-          != md.render(flash.content)
+      article.flash(id=flash.date)
+        if flash === flashes[flashes.length - 1]
+          span#latest
+        span.flash__date #{flash.date}
+        != md.render(flash.content)
     hr
-    if (!cookies.choseConfig)
+    if (!cookies.choseSubscribe)
       article#subscribe
-        p You've reached the end, but the story's not over. A new chunk of the story is released every #{releaseSchedule}. Want to get notified when the next part of the story is released?
+        p You've reached the end, but the story's not over. A new chunk of the story is released every #{releaseSchedule} (there's a countdown in the footer). Want to get notified when the next part of the story is released?
         a.button(href="javascript:emailPrefs('all')") Yes, please! Email me every time!
         if (config.releasedOn.length > 1)
-          a.button(href="javascript:emailPrefs('weekly')") I'd prefer a weekly digest.
+          a.button(href="javascript:emailPrefs('weekly')") Thanks, I'd prefer a weekly digest.
         a.button(href="javascript:emailPrefs('none')") NO EMAILS PLS KTHXBYE
+    else if (cookies.choseSubscribe)
+      article: p That's the entire story so far. Come back for a new chunk every #{releaseSchedule}! (there's a countdown in the footer)

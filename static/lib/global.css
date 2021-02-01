@@ -35,10 +35,16 @@ hr {
 
 article {
   max-width: 700px;
+  padding: 0 0.75em;
 }
 
 a {
   color: inherit;
+}
+
+::selection {
+  background-color: lime;
+  color: #000;
 }
 
 /* Forms */
@@ -50,6 +56,13 @@ input, label, textarea, button, a.button {
   padding: 0.5em;
   background-color: inherit;
   color: inherit;
+}
+
+input[type="checkbox"] {
+  width: initial;
+  padding: initial;
+  display: initial;
+  margin: 0 0.75em;
 }
 
 ::placeholder {
@@ -68,6 +81,10 @@ a.button {
 label {
   font-weight: bold;
   padding-left: 0;
+}
+
+.error {
+  color: red;
 }
 
 
@@ -92,18 +109,16 @@ label {
 }
 
 /* Flashes */
-.flash, article {
-  padding: 0.25em 0.75em;
-}
 
-.flash article {
+.flash {
   position: relative;
   line-height: 1.4em;
-  padding: 0;
+  margin: 1.25em 0;
 }
 
 .flash p {
   text-indent: 0.5in;
+  margin: 0.5em 0;
 }
 
 .flash p:nth-of-type(1) {

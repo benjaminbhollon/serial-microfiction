@@ -94,6 +94,40 @@ app.post('/admin/flash/', async (request, response) => {
   return response.redirect(302, '../');
 });
 
+app.get('/subscribe/:frequency/', async (request, response) => {
+  response.render("subscribe", {
+    frequency: request.params.frequency,
+    config,
+  });
+});
+
+app.post('/subscribe/:frequency/', async (request, response) => {
+  if (request.params.frequency === 'none') {
+    response.cookie('choseSubscribe', true, {maxAge: 1000 * 60 * 60 * 24 * 365});
+    return response.status(204).end();
+  }
+
+  let exists = false;
+  await crud.findDocument('subscribers', {email: request.body.email.toLowerCase()}).then((result) => {
+    if (result) exists = true;
+  });
+  if (exists) {
+    response.cookie('choseSubscribe', true, {maxAge: 1000 * 60 * 60 * 24 * 365});
+    return response.render('subscribe', {frequency: request.params.frequency, success: false, err: "Whoopsie! Looks like you're already signed up for email updates!", config});
+  }
+
+  const subscriberObject = {
+    email: request.body.email.toLowerCase(),
+    frequency: request.params.frequency,
+  }
+
+  await crud.insertDocument('subscribers', subscriberObject);
+
+  response.cookie('choseSubscribe', true, {maxAge: 1000 * 60 * 60 * 24 * 365});
+
+  return response.render('subscribe', {frequency: request.params.frequency, success: true, config});
+})
+
 
 // Listen on port from config.json
 app.listen(config.port, () => {
