@@ -17,8 +17,9 @@ block content
         li: a(href="/about-the-author/") Learn more about #{config.author.name.split(" ")[0]}
     hr#beginning
     each flash in flashes
-      article.flash(id=flash.date)
-        if flash === flashes[flashes.length - 1]
-          span#latest
-        span.flash__date #{flash.date}
-        != md.render(flash.content)
+      div.flash(id=flash.date data-latest=flash === flashes[flashes.length - 1])
+        article
+          if flash === flashes[flashes.length - 1]
+            span#latest
+          span.flash__date #{flash.date}
+          != md.render(flash.content)
