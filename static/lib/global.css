@@ -109,4 +109,11 @@ label {
   right: -175px;
   width: 175px;
   padding-left: 1em;
+  display: none;
+}
+
+@media (min-width: 910px) {
+  .flash__date {
+    display: inline;
+  }
 }
