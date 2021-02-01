@@ -81,11 +81,11 @@ app.post('/admin/flash/', async (request, response) => {
     });
   }
   const lastPosted = new Date(flashes.length ? flashes[flashes.length - 1].date : Date.now());
-  const daysToAdd = ((config.releasedOn.find(day => day > lastPosted.getUTCDay()) === undefined ? config.releasedOn[0] : config.releasedOn.find(day => day > lastPosted.getUTCDay())) - lastPosted.getUTCDay() + 7) % 7;
-  const nextPostDue = new Date(lastPosted.getUTCFullYear(), lastPosted.getUTCMonth(), lastPosted.getUTCDate() + daysToAdd + 1);
+  const daysToAdd = ((config.releasedOn.find(day => day > lastPosted.getDay()) === undefined ? config.releasedOn[0] : config.releasedOn.find(day => day > lastPosted.getDay())) - lastPosted.getDay() + 7) % 7;
+  const nextPostDue = new Date(lastPosted.getFullYear(), lastPosted.getMonth(), lastPosted.getDate() + daysToAdd + 1);
 
-  console.log("Right now is:\n", new Date(), "The last post was at:\n", lastPosted, "We need to add n days:\n", daysToAdd, "So the next post should be at:\n", nextPostDue, "The config is:\n", config);
-  console.log(lastPosted.getUTCFullYear(), lastPosted.getUTCMonth(), lastPosted.getUTCDate() + daysToAdd + 1, lastPosted.getUTCDate());
+  console.log("Right now is:\n", new Date(), "The last post was at:\n", lastPosted, "We need to add n days:\n", daysToAdd, "So the next post should be at:\n", nextPostDue, "The config is:\n");
+  console.log(lastPosted.getFullYear(), lastPosted.getMonth(), lastPosted.getDate() + daysToAdd + 1, lastPosted.getDate());
 
   let flash = {
     date: nextPostDue.toISOString().split("T")[0],
