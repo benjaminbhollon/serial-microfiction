@@ -1,5 +1,6 @@
 const { MongoClient } = require('mongodb'); // Import MongoDB
 const config = require('../config.json');
+const dbName = 'sm-core';
 
 // Create document
 exports.insertDocument = async function insertDocument(collection, value) {
@@ -12,7 +13,7 @@ exports.insertDocument = async function insertDocument(collection, value) {
     await client.connect();
 
     // Insert document
-    return await client.db('sm-core').collection(collection).insertOne(value);
+    return await client.db(dbName).collection(collection).insertOne(value);
   } catch (e) {
     console.error(e);
     return false;
@@ -32,7 +33,27 @@ exports.findDocument = async function findDocument(collection, filter) {
     await client.connect();
 
     // Find document
-    return await client.db('sm-core').collection(collection).findOne(filter);
+    return await client.db(dbName).collection(collection).findOne(filter);
+  } catch (e) {
+    console.error(e);
+    return false;
+  } finally {
+    await client.close();
+  }
+};
+
+// Count documents
+exports.countDocuments = async function findDocument(collection, filter) {
+  const uri = config.mongodbURI;
+
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+  try {
+    // Connect to the MongoDB cluster
+    await client.connect();
+
+    // Find document
+    return await client.db(dbName).collection(collection).countDocuments(filter);
   } catch (e) {
     console.error(e);
     return false;
@@ -52,7 +73,7 @@ exports.findMultipleDocuments = async function findMultipleDocuments(collection,
     await client.connect();
 
     // Find documents
-    return await client.db('sm-core').collection(collection).find(filter).toArray();
+    return await client.db(dbName).collection(collection).find(filter).toArray();
   } catch (e) {
     console.error(e);
     return false;
@@ -72,7 +93,7 @@ exports.updateDocument = async function updateDocument(collection, filter, set) 
     await client.connect();
 
     // Update document
-    return await client.db('sm-core').collection(collection).updateOne(filter, { $set: set });
+    return await client.db(dbName).collection(collection).updateOne(filter, { $set: set });
   } catch (e) {
     console.error(e);
     return false;
@@ -91,8 +112,8 @@ exports.updateMultipleDocuments = async function updateMultipleDocuments(collect
     // Connect to the MongoDB cluster
     await client.connect();
 
-    // Update document
-    return await client.db('sm-core').collection(collection).updateMany(filter, { $set: set });
+    // Update documents
+    return await client.db(dbName).collection(collection).updateMany(filter, { $set: set });
   } catch (e) {
     console.error(e);
     return false;
@@ -112,7 +133,7 @@ exports.deleteDocument = async function deleteDocument(collection, filter) {
     await client.connect();
 
     // Delete document
-    return await client.db('sm-core').collection(collection).deleteOne(filter);
+    return await client.db(dbName).collection(collection).deleteOne(filter);
   } catch (e) {
     console.error(e);
     return false;
@@ -131,8 +152,8 @@ exports.deleteMultipleDocuments = async function deleteMultipleDocuments(collect
     // Connect to the MongoDB cluster
     await client.connect();
 
-    // Find document
-    return await client.db('sm-core').collection(collection).deleteMany(filter);
+    // Delete documents
+    return await client.db(dbName).collection(collection).deleteMany(filter);
   } catch (e) {
     console.error(e);
     return false;
