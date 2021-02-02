@@ -118,6 +118,7 @@ app.post('/subscribe/:frequency/', async (request, response) => {
 
   const subscriberObject = {
     email: request.body.email.toLowerCase(),
+    news: request.body.news,
     frequency: request.params.frequency,
   }
 

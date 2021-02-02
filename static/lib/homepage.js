@@ -6,7 +6,7 @@ function emailPrefs(frequency) {
   if (frequency === 'none') {
     $.post("/subscribe/none/", () => {
       document.getElementById("subscribe").innerHTML = `
-        <p>Well, all right. We won't ask you again. Maybe you'll remember to come back on your own?</p>
+        <p>Well, all right. We won't ask you again. Hopefully you'll be coming back on your own?</p>
       `;
     });
     return false;

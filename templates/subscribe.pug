@@ -22,6 +22,9 @@ block content
         label Your email:
           input(type="email" name="email" placeholder="smart@cookie.com" autofocus required)
         label
+          input(type="checkbox" name="news" checked)
+          | I also want to receive non-story news about <em>#{config.title}</em>
+        label
           input(type="checkbox" name="agree" required)
           | I agree to receive #{frequency} updates from <em>#{config.title}</em> to the email address specified above.
         input(type="submit" value="Sign me up!")
