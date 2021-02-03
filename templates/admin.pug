@@ -17,12 +17,17 @@ block content
   details
     summary Unpublished Flashes (#{flashes.length})
     each flash in flashes
-      article.flash
+      article.flash(id=flash._id.toString())
         p
           em Release date:
           |  #{flash.date}
         .flash__content
           != md.render(flash.content)
+        p
+          a.error(href="javascript:deleteFlash('" + flash._id.toString() + "')") Delete
+          |
+          |
+          a.warning(href="javascript:editFlash('" + flash._id.toString() + "')") Edit
   h2 Add flash
   form(method="POST" action="./flash/")
     label(for="flashContent") Full text:

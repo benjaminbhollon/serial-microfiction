@@ -87,6 +87,10 @@ label {
   color: red;
 }
 
+.warning {
+  color: yellow
+}
+
 
 /* Navbar */
 .main-nav {
