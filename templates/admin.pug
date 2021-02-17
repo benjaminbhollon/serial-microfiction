@@ -15,7 +15,7 @@ block append head
 block content
   h1 Admin Dasbhoard
   details
-    summary Published Flashes (#{publishedFlashes.length})
+    summary Published Flashes (#{publishedFlashes.length.toLocaleString('en-us')})
     each flash in publishedFlashes
       article.flash(id=flash._id.toString())
         p:em Release date: #{flash.date}
@@ -28,7 +28,7 @@ block content
           |
           a.warning(href="javascript:editFlash('" + flash._id.toString() + "')") Edit
   details
-    summary Unpublished Flashes (#{unpublishedFlashes.length})
+    summary Unpublished Flashes (#{unpublishedFlashes.length.toLocaleString('en-us')})
     each flash in unpublishedFlashes
       article.flash(id=flash._id.toString())
         p
@@ -43,8 +43,8 @@ block content
           a.warning(href="javascript:editFlash('" + flash._id.toString() + "')") Edit
   details
     summary Stats
-    p Published word count: #{publishedFlashes.length ? publishedFlashes.map(thisFlash => thisFlash.content).join('\n').split(/  \n| |\n\n/).length : 0}
-    p Unpublished word count: #{unpublishedFlashes.length ? unpublishedFlashes.map(thisFlash => thisFlash.content).join('\n').split(/  \n| |\n\n/).length : 0}
+    p Published word count: #{publishedFlashes.length ? publishedFlashes.map(thisFlash => thisFlash.content).join('\n').split(/  \n| |\n\n/).length.toLocaleString('en-us') : 0}
+    p Unpublished word count: #{unpublishedFlashes.length ? unpublishedFlashes.map(thisFlash => thisFlash.content).join('\n').split(/  \n| |\n\n/).length.toLocaleString('en-us') : 0}
   h2 Add flash
   form(method="POST" action="./flash/")
     label(for="flashContent") Full text:
@@ -57,5 +57,5 @@ block content
     input(type="submit" value="Add")
   script.
     function wordCount() {
-      document.getElementById("words").innerText = document.getElementById("flashContent").value.split(/  \n| |\n\n/).length;
+      document.getElementById("words").innerText = document.getElementById("flashContent").value.split(/  \n| |\n\n/).length.toLocaleString('en-us');
     }
