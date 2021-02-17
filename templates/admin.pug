@@ -15,8 +15,21 @@ block append head
 block content
   h1 Admin Dasbhoard
   details
-    summary Unpublished Flashes (#{flashes.length})
-    each flash in flashes
+    summary Published Flashes (#{publishedFlashes.length})
+    each flash in publishedFlashes
+      article.flash(id=flash._id.toString())
+        p:em Release date: #{flash.date}
+        p:em Hits: #{flash.hits}
+        .flash__content
+          != md.render(flash.content)
+        p
+          a.error(href="./flash/" + flash._id.toString() + "/delete/") Delete
+          |
+          |
+          a.warning(href="javascript:editFlash('" + flash._id.toString() + "')") Edit
+  details
+    summary Unpublished Flashes (#{unpublishedFlashes.length})
+    each flash in unpublishedFlashes
       article.flash(id=flash._id.toString())
         p
           em Release date:
@@ -24,10 +37,14 @@ block content
         .flash__content
           != md.render(flash.content)
         p
-          a.error(href="javascript:deleteFlash('" + flash._id.toString() + "')") Delete
+          a.error(href="./flash/" + flash._id.toString() + "/delete/") Delete
           |
           |
           a.warning(href="javascript:editFlash('" + flash._id.toString() + "')") Edit
+  details
+    summary Stats
+    p Published word count: #{publishedFlashes.length ? publishedFlashes.map(thisFlash => thisFlash.content).join('\n').split(/  \n| |\n\n/).length : 0}
+    p Unpublished word count: #{unpublishedFlashes.length ? unpublishedFlashes.map(thisFlash => thisFlash.content).join('\n').split(/  \n| |\n\n/).length : 0}
   h2 Add flash
   form(method="POST" action="./flash/")
     label(for="flashContent") Full text:
@@ -35,6 +52,8 @@ block content
     p
       span#words 0
       |  words
+    label(for="flashDate") Publish date:
+    input(type="text" name="date" id="flashDate" placeholder="yyyy-mm-dd (leave blank for default)")
     input(type="submit" value="Add")
   script.
     function wordCount() {

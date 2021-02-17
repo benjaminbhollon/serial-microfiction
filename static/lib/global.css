@@ -50,7 +50,7 @@ a {
 /* Forms */
 input, label, textarea, button, a.button {
   display: block;
-  margin: 0;
+  margin: 0.5em 0;
   width: 100%;
   max-width: 500px;
   padding: 0.5em;
