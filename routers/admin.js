@@ -21,7 +21,7 @@ router.use(express.json());
 router.use(bodyParser.json());
 
 //Routes
-router.get('/admin/', async (request, response) => {
+router.get('/', async (request, response) => {
   //Get all unpublished flashes
   let unpublishedFlashes = [];
   let publishedFlashes = [];
@@ -40,7 +40,7 @@ router.get('/admin/', async (request, response) => {
   });
 });
 
-router.post('/admin/flash/', async (request, response) => {
+router.post('/flash/', async (request, response) => {
   //Get current flashes
   let flashes = [];
   await crud.findMultipleDocuments('flashes', {}).then((result) => {
@@ -70,7 +70,7 @@ router.post('/admin/flash/', async (request, response) => {
   return response.redirect(302, '../');
 });
 
-router.get('/admin/flash/:flashId/delete/', async (request, response) => {
+router.get('/flash/:flashId/delete/', async (request, response) => {
   //Note: this is a GET request so it can be directly linked to
 
   await crud.deleteDocument('flashes', {

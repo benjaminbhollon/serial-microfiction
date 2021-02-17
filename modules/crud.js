@@ -102,6 +102,26 @@ exports.updateDocument = async function updateDocument(collection, filter, set) 
   }
 };
 
+// Update document special
+exports.updateDocumentSpecial = async function updateDocument(collection, filter, update) {
+  const uri = config.mongodbURI;
+
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+  try {
+    // Connect to the MongoDB cluster
+    await client.connect();
+
+    // Update document
+    return await client.db(dbName).collection(collection).updateOne(filter, update);
+  } catch (e) {
+    console.error(e);
+    return false;
+  } finally {
+    await client.close();
+  }
+};
+
 // Update multiple documents
 exports.updateMultipleDocuments = async function updateMultipleDocuments(collection, filter, set) {
   const uri = config.mongodbURI;

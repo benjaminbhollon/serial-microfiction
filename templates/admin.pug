@@ -17,12 +17,12 @@ block content
   details
     summary Published Flashes (#{publishedFlashes.length.toLocaleString('en-us')})
     each flash in publishedFlashes
-      article.flash(id=flash._id.toString())
-        p:em Release date: #{flash.date}
-        p:em Hits: #{flash.hits}
+      article.flash(id=flash._id.toString() data-md="flash.content")
+        p.no-indent: em Release date: #{flash.date}
+        p.no-indent: em Hits: #{flash.hits}
         .flash__content
           != md.render(flash.content)
-        p
+        p.no-indent
           a.error(href="./flash/" + flash._id.toString() + "/delete/") Delete
           |
           |
@@ -31,12 +31,10 @@ block content
     summary Unpublished Flashes (#{unpublishedFlashes.length.toLocaleString('en-us')})
     each flash in unpublishedFlashes
       article.flash(id=flash._id.toString())
-        p
-          em Release date:
-          |  #{flash.date}
+        p.no-indent: em Release date: #{flash.date}
         .flash__content
           != md.render(flash.content)
-        p
+        p.no-indent
           a.error(href="./flash/" + flash._id.toString() + "/delete/") Delete
           |
           |
@@ -57,5 +55,5 @@ block content
     input(type="submit" value="Add")
   script.
     function wordCount() {
-      document.getElementById("words").innerText = document.getElementById("flashContent").value.split(/  \n| |\n\n/).length.toLocaleString('en-us');
+      document.getElementById("words").innerText = document.getElementById("flashContent").value.length ? document.getElementById("flashContent").value.split(/  \n| |\n\n/).length.toLocaleString('en-us') : 0;
     }

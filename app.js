@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const MarkdownIt = require('markdown-it');
 
 const md = new MarkdownIt({ html: true });
+const ObjectId = require('mongodb').ObjectId;
 
 // Import config
 const config = require('./config.json');
@@ -51,7 +52,7 @@ app.get('/', async (request, response) => {
 
 const adminRouter = require('./routers/admin');
 
-app.use(adminRouter);
+app.use('/admin/', adminRouter);
 
 app.get('/subscribe/:frequency/', async (request, response) => {
   response.render("subscribe", {
@@ -88,6 +89,11 @@ app.post('/subscribe/:frequency/', async (request, response) => {
   return response.render('subscribe', {frequency: request.params.frequency, success: true, config});
 })
 
+app.post('/flashes/:flashId/hit/', async (request, response) => {
+  await crud.updateDocumentSpecial('flashes', {_id: ObjectId(request.params.flashId.toString())}, {$inc: {hits: 1}});
+
+  return response.status(204).end();
+});
 
 // Listen on port from config.json
 app.listen(config.port, () => {
