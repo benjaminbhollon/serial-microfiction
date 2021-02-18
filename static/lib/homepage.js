@@ -18,14 +18,19 @@ let flashesRead = [];
 
 async function logHit(entries, observer) {
   entries.forEach((entry) => {
-    if (entry.isIntersecting && flashesRead.indexOf(entry.target.dataset.id) === -1) {
-      flashesRead.push(entry.target.dataset.id);
-      $.post('/flashes/' + entry.target.dataset.id + '/hit/');
+    if (entry.isIntersecting) {
+      history.pushState({date: entry.target.id}, document.title, '#' + entry.target.id);
+      if (flashesRead.indexOf(entry.target.dataset.id) === -1) {
+        flashesRead.push(entry.target.dataset.id);
+        $.post('/flashes/' + entry.target.dataset.id + '/hit/');
+      }
     }
   });
 };
 
-const hitObserver = new IntersectionObserver(logHit);
+const hitObserver = new IntersectionObserver(logHit, {
+  threshold: 0.5
+});
 
 document.querySelectorAll('article.flash').forEach((element) =>{
   hitObserver.observe(element);
