@@ -83,7 +83,9 @@ app.get('/feed/', async (request, response) => {
   <description>${config.synopsis}</description>
   <link>//` + request.hostname + `</link>`
     + feed.join('') +
-  `</channel>
+  `
+  <copyright>${config.copyright.replace("[[YEARS]]", config.startYear !== new Date().getFullYear() ? config.startYear + "-" + (new Date()).getFullYear() : config.startYear).replace("[[AUTHOR]]", config.author.name)}</copyright>
+  </channel>
   </rss>`
   );
 });
