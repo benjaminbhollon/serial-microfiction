@@ -1,8 +1,9 @@
 extends layout.pug
 
 block variables
-  - title = "Home"
+  - hardTitle = `${config.title} by ${config.author.name}`
   - metaDescription = config.synopsis
+  - metaType = 'book'
   - daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
   - releaseSchedule = config.releasedOn.map(day => (config.releasedOn[config.releasedOn.length - 1] === day && config.releasedOn.length > 1 ? "and " : "") + daysOfWeek[day]).join(", ")
   if JSON.stringify(config.releasedOn) === "[0,1,2,3,4,5,6]"
@@ -17,6 +18,7 @@ block append resources
 block content
   #story
     article#intro
+      p #{hardTitle}
       p Greetings, and welcome to <em>#{config.title}</em>, a serial composed of microfiction by #{config.author.name}. What would you like to do today?
       ul
         li: a(href="#beginning") Start reading from the beginning
