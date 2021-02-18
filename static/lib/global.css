@@ -155,3 +155,21 @@ label {
     display: inline;
   }
 }
+
+/* Scroll to Top */
+#scrollToTop {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  font-size: 1.3em;
+  text-align: center;
+  width: 1.75em;
+  height: 1.85em;
+  line-height: 1.85em;
+  border: 1px solid;
+  border-radius: 100%;
+  background-color: inherit;
+  text-decoration: none;
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}

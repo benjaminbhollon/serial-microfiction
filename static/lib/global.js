@@ -1,11 +1,11 @@
-//Declare variables
+// Declare variables
 const releasedOn = JSON.parse(document.getElementById("releasedOn").innerText);
 const now = new Date();
 const offset = now.getTimezoneOffset() * 1000 * 60;
 const daysToAdd = ((releasedOn.find(day => day > now.getUTCDay()) === undefined ? releasedOn[0] : releasedOn.find(day => day > now.getUTCDay())) - now.getUTCDay() + 7) % 7;
 const countdownTo = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + daysToAdd);
 
-//Countdown to next flash
+// Countdown to next flash
 function updateCountdown() {
   const now = new Date();
   const daysLeft = Math.floor((countdownTo - now - offset) / (1000 * 60 * 60 * 24));
@@ -17,3 +17,11 @@ function updateCountdown() {
 }
 setInterval(updateCountdown, 1000);
 updateCountdown();
+
+// Scroll to Top Button
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 250)
+    document.getElementById('scrollToTop').style.display = 'initial';
+  else
+    document.getElementById('scrollToTop').style.display = 'none';
+});
