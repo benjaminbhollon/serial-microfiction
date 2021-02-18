@@ -13,12 +13,12 @@ block append head
     }
 
 block content
-  h1 Admin Dasbhoard
+  h1 Admin Dashboard
   details
     summary Published Flashes (#{publishedFlashes.length.toLocaleString('en-us')})
     each flash in publishedFlashes
-      article.flash(id=flash._id.toString() data-md="flash.content")
-        p.no-indent: em Release date: #{flash.date}
+      article.flash(id='q' + flash._id.toString() data-md=flash.content)
+        p.no-indent: em Release date: <span class='date'>#{flash.date}</span>
         p.no-indent: em Hits: #{flash.hits}
         .flash__content
           != md.render(flash.content)
@@ -30,8 +30,8 @@ block content
   details
     summary Unpublished Flashes (#{unpublishedFlashes.length.toLocaleString('en-us')})
     each flash in unpublishedFlashes
-      article.flash(id=flash._id.toString())
-        p.no-indent: em Release date: #{flash.date}
+      article.flash(id='q' + flash._id.toString() data-md=flash.content)
+        p.no-indent: em Release date: <span class='date'>#{flash.date}</span>
         .flash__content
           != md.render(flash.content)
         p.no-indent
@@ -46,16 +46,32 @@ block content
   h2 Add flash
   form(method="POST" action="./flash/")
     label(for="flashContent") Full text:
-    textarea(name="content" id="flashContent" placeholder="Add markdown, HTML, or a mix..." oninput="wordCount()")
+    textarea(name="content" id="flashContent" placeholder="Add markdown, HTML, or a mix..." oninput="wordCount()" required)
     p
       span#words 0
       |  words
     label(for="flashDate") Publish date:
     input(type="text" name="date" id="flashDate" placeholder="yyyy-mm-dd (leave blank for default)")
     input(type="submit" value="Add")
+  h2#edit-flash Edit Flash
+  p Click "Edit" on a flash above to edit it here.
+  form#edit-flash__form.hidden(method="POST")
+    label(for="flashContent--edit") Full text:
+    textarea(name="content" id="flashContent--edit" placeholder="Add markdown, HTML, or a mix..." oninput="wordCount()")
+    label(for="flashDate--edit") Publish date:
+    input(type="text" name="date" id="flashDate--edit" placeholder="yyyy-mm-dd" required)
+    input(type="submit" value="Update")
   h2 Analytics
   a.button(href="/admin/cookie/dontHit/toggle") #{cookies.dontHit === 'true' ? 'Track my Hits' : 'Ignore my Hits'}
   script.
     function wordCount() {
       document.getElementById("words").innerText = document.getElementById("flashContent").value.length ? document.getElementById("flashContent").value.split(/  \n| |\n\n/).length.toLocaleString('en-us') : 0;
+    }
+    function editFlash(id) {
+      let form = document.getElementById('edit-flash__form');
+      form.setAttribute('action', './flash/' + id + "/update");
+      document.getElementById('flashContent--edit').innerHTML = document.getElementById('q' + id).dataset.md;
+      document.getElementById('flashDate--edit').value = document.querySelector(`#q${id} .date`).innerText;
+      form.style.display = 'block';
+      location.href = '#edit-flash__form';
     }

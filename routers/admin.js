@@ -81,6 +81,15 @@ router.post('/flash/', async (request, response) => {
   return response.redirect(302, '/admin/');
 });
 
+router.post('/flash/:flashId/update', async (request, response) => {
+  await crud.updateDocument('flashes', {_id: ObjectId(request.params.flashId)}, {
+    content: request.body.content,
+    date: request.body.date,
+  });
+
+  response.redirect(302, '/admin/');
+});
+
 router.get('/flash/:flashId/delete', async (request, response) => {
   // Note: this is a GET request so it can be directly linked to
 
