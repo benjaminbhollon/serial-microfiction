@@ -55,12 +55,12 @@ const adminRouter = require('./routers/admin');
 app.use('/admin/', adminRouter);
 
 app.post('/subscribe/', async (request, response) => {
-  response.cookie('choseSubscribe', true, {maxAge: 1000 * 60 * 60 * 24 * 365});
+  response.cookie('choseSubscribe', true);
   return response.status(204).end();
 })
 
 app.post('/flashes/:flashId/hit/', async (request, response) => {
-  await crud.updateDocumentSpecial('flashes', {_id: ObjectId(request.params.flashId.toString())}, {$inc: {hits: 1}});
+  if (request.cookies.dontHit !== 'true') await crud.updateDocumentSpecial('flashes', {_id: ObjectId(request.params.flashId.toString())}, {$inc: {hits: 1}});
 
   return response.status(204).end();
 });

@@ -37,6 +37,7 @@ router.get('/', async (request, response) => {
     unpublishedFlashes,
     publishedFlashes,
     md,
+    cookies: request.cookies,
   });
 });
 
@@ -67,10 +68,10 @@ router.post('/flash/', async (request, response) => {
 
   await crud.insertDocument('flashes', flash);
 
-  return response.redirect(302, '../');
+  return response.redirect(302, '/admin/');
 });
 
-router.get('/flash/:flashId/delete/', async (request, response) => {
+router.get('/flash/:flashId/delete', async (request, response) => {
   //Note: this is a GET request so it can be directly linked to
 
   await crud.deleteDocument('flashes', {
@@ -79,6 +80,12 @@ router.get('/flash/:flashId/delete/', async (request, response) => {
 
   response.redirect(302, '/admin/');
 })
+
+router.get('/cookie/:cookieName/toggle', async (request, response)=> {
+  if (request.cookies[request.params.cookieName] === 'true') response.cookie(request.params.cookieName, false);
+  else response.cookie(request.params.cookieName, true);
+    return response.redirect(302, '/admin/');
+});
 
 //Routes
 module.exports = router;
