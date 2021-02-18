@@ -49,8 +49,7 @@ block content
         li Total hits: #{publishedFlashes.map(flash => flash.hits).reduce((a, b) => a + b, 0)}
         li Average hits: #{Math.round(publishedFlashes.map(flash => flash.hits).reduce((a, b) => a + b, 0) / publishedFlashes.length)}
         - flashesUntil = publishedFlashes.concat(unpublishedFlashes)[publishedFlashes.concat(unpublishedFlashes).length - 1].date
-        li Flashes supplied through: #{flashesUntil}
-        |  (#{new Date(flashesUntil).getTime() < Date.now() ? 0 : Math.round((new Date(flashesUntil).getTime() - Date.now()) / (1000*60*60*24))} days from now)
+        li Flashes supplied through: #{flashesUntil} (#{new Date(flashesUntil).getTime() < Date.now() ? 0 : Math.round((new Date(flashesUntil).getTime() - Date.now()) / (1000*60*60*24))} days from now)
   section
     h2 Add flash
     form(method="POST" action="./flash/")
