@@ -7,6 +7,8 @@ const MarkdownIt = require('markdown-it');
 
 const md = new MarkdownIt({ html: true });
 const ObjectId = require('mongodb').ObjectId;
+const weekDaysShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const monthsShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 // Import config
 const config = require('./config.json');
@@ -53,6 +55,38 @@ app.get('/', async (request, response) => {
 const adminRouter = require('./routers/admin');
 
 app.use('/admin/', adminRouter);
+
+app.get('/feed/', async (request, response) => {
+  let flashes = [];
+
+  await crud.findMultipleDocuments('flashes', {}).then((result) => {
+    flashes = result;
+  });
+
+  let feed = flashes.slice(0, 15).map((flash) => {
+    const date = new Date(flash.date);
+    return `<item>
+      <title>Flash for ${flash.date}</title>
+      <link>//${request.hostname}/#${flash.date}</link>
+      <guid>${flash._id.toString()}</guid>
+      <pubDate>${weekDaysShort[date.getDay()]}, ${date.getDate()} ${monthsShort[date.getMonth()]} ${date.getFullYear()} 0:00:00 UTC</pubDate>
+      <description>The chunk of the ${config.title} story that was released on ${flash.date}</description>
+    </item>`
+  })
+
+  response.type('xml');
+  response.send(
+    `<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+  <title>${config.title}</title>
+  <description>${config.synopsis}</description>
+  <link>//` + request.hostname + `</link>`
+    + feed.join('') +
+  `</channel>
+  </rss>`
+  );
+});
 
 app.post('/subscribe/', async (request, response) => {
   response.cookie('choseSubscribe', true);
