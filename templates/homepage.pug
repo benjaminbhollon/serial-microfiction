@@ -31,11 +31,12 @@ block content
         != md.render(flash.content)
     hr
     if (!cookies.choseSubscribe)
+      span.hidden#subscribeMessages #{JSON.stringify(config.subscription)}
       article#subscribe
         p You've reached the end, but the story's not over. A new chunk of the story is released every #{releaseSchedule} (there's a countdown in the footer). Want to get notified when the next part of the story is released?
-        a.button(href="javascript:emailPrefs('all')") Yes, please! Email me every time!
+        a.button(href="javascript:emailPrefs('all')") #{config.subscription.all.label}
         if (config.releasedOn.length > 1)
-          a.button(href="javascript:emailPrefs('weekly')") Thanks, I'd prefer a weekly digest.
-        a.button(href="javascript:emailPrefs('none')") NO EMAILS PLS KTHXBYE
+          a.button(href="javascript:emailPrefs('weekly')") #{config.subscription.weekly.label}
+        a.button(href="javascript:emailPrefs('none')") #{config.subscription.none.label}
     else if (cookies.choseSubscribe)
       article: p That's the entire story so far. Come back for a new chunk every #{releaseSchedule}! (there's a countdown in the footer)
