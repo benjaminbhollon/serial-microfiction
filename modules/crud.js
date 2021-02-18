@@ -1,5 +1,6 @@
 const { MongoClient } = require('mongodb'); // Import MongoDB
 const config = require('../config.json');
+
 const dbName = 'sm-core';
 
 // Create document

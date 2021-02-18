@@ -6,7 +6,7 @@
   "scripts": {
     "start": "pm2 start app.js --name serialmicro --watch",
     "stop": "pm2 delete serialmicro",
-    "test": "eslint . --fix"
+    "lint": "eslint . --fix"
   },
   "repository": {
     "type": "git",
@@ -28,5 +28,10 @@
     "mongodb": "^3.6.3",
     "pm2": "^4.5.2",
     "pug": "^3.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
   }
 }
