@@ -29,6 +29,7 @@ html(lang="en")
         a.main-nav__author(href="/about-the-author/") #{config.author.name}
     #content
       block content
+    a#scrollToTop.hidden(href='#top') &lt;
     block footer
       footer
         p #{config.copyright.replace("[[YEARS]]", config.startYear !== new Date().getFullYear() ? config.startYear + "-" + (new Date()).getFullYear() : config.startYear).replace("[[AUTHOR]]", config.author.name)}
