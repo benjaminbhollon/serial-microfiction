@@ -2,6 +2,7 @@
 const express = require('express');
 const basicAuth = require('express-basic-auth');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 const MarkdownIt = require('markdown-it');
 
 const md = new MarkdownIt({ html: true });
@@ -11,7 +12,7 @@ const { ObjectId } = require('mongodb');
 const crud = require('../modules/crud');
 
 // Config
-const config = require('../config.json');
+let config = require('../config.json');
 
 const router = express.Router();
 
@@ -104,6 +105,25 @@ router.get('/cookie/:cookieName/toggle', async (request, response) => {
   if (request.cookies[request.params.cookieName] === 'true') response.cookie(request.params.cookieName, false);
   else response.cookie(request.params.cookieName, true);
   return response.redirect(302, '/admin/');
+});
+
+router.post('/config/update', async (request, response) => {
+  config.title = request.body.title;
+  config.synopsis = request.body.synopsis;
+  config.author = {
+    name: request.body.authorName,
+    about: request.body.authorAbout,
+  }
+  config.copyright = request.body.copyright;
+  config.releasedOn = [];
+  for (let i = 0; i < 7; i++) {
+    if (request.body['releasedOn-' + i]) config.releasedOn.push(i);
+  }
+  config.startYear = parseInt(request.body.startYear);
+
+  await fs.writeFile('./config.json', JSON.stringify(config, null, 2), (err) => {
+    response.redirect(302, '/admin/');
+  });
 });
 
 // Routes

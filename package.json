@@ -1,6 +1,6 @@
 {
   "name": "serial-microfiction",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A framework for releasing a story in tiny chunks.",
   "main": "app.js",
   "scripts": {
