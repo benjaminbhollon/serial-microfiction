@@ -74,6 +74,7 @@ router.post('/flash/', async (request, response) => {
   const flash = {
     date: (request.body.date ? request.body.date : nextPostDue.toISOString().split('T')[0]),
     content: request.body.content,
+    type: 'flash',
     hits: 0,
   };
 
