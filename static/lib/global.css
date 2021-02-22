@@ -43,10 +43,6 @@
 
 /* General Styles */
 
-* {
-  box-sizing: border-box;
-}
-
 body {
   font-size: 1.3em;
   font-family: var(--font-family);
@@ -221,11 +217,12 @@ label {
   font-size: 1.3em;
   text-align: center;
   width: 1.75em;
-  height: 1.85em;
-  line-height: 1.85em;
+  height: 1.75em;
+  line-height: 1.63em;
   border: 1px solid;
   border-radius: 100%;
   background-color: inherit;
+  font-family: monospace;
   text-decoration: none;
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
