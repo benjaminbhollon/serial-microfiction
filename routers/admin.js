@@ -120,6 +120,19 @@ router.post('/config/update', async (request, response) => {
     if (request.body['releasedOn-' + i]) config.releasedOn.push(i);
   }
   config.startYear = parseInt(request.body.startYear);
+  config.subscription = {
+    all: {
+      label: request.body.subscriptionAllLabel,
+      link: request.body.subscriptionAllLink
+    },
+    weekly: {
+      label: request.body.subscriptionWeeklyLabel,
+      link: request.body.subscriptionWeeklyLink
+    },
+    none: {
+      label: request.body.subscriptionNoneLabel
+    },
+  }
 
   await fs.writeFile('./config.json', JSON.stringify(config, null, 2), (err) => {
     response.redirect(302, '/admin/');

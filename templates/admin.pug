@@ -78,14 +78,14 @@ block content
     - daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     form(method="POST" action="/admin/config/update")
       label(for="configTitle") Book title:
-      input#configTitle(type="text" name="title" placeholder="Plain text" value=config.title)
+      input#configTitle(type="text" name="title" placeholder="Plain text" value=config.title required)
       label(for="configSynopsis") Book synopsis:
-      textarea#conficSynopsis(name="synopsis" placeholder = "Markdown, HTML, or a mis.")
+      textarea#conficSynopsis(name="synopsis" placeholder = "Markdown, HTML, or a mix." required)
         = config.synopsis
       label(for="configAuthorName") Author name:
-      input#configAuthorName(type="text" name="authorName" placeholder="Plain Text" value=config.author.name)
+      input#configAuthorName(type="text" name="authorName" placeholder="Plain Text" value=config.author.name required)
       label(for="configAuthorAbout") About the author:
-      textarea#configAuthorAbout(name="authorAbout" placeholder="Markdown, HTML, or a mix.")
+      textarea#configAuthorAbout(name="authorAbout" placeholder="Markdown, HTML, or a mix." required)
         = config.author.about
       label Released on:
       - dayNo = 0
@@ -95,9 +95,20 @@ block content
           | #{day}
         - dayNo += 1
       label(for="configCopyright") Copyright notice:
-      input#configCopyright(type="text" name="copyright" placeholder='[[YEARS]] = story active years; [[AUTHOR]] = author\'s name.' value=config.copyright)
+      input#configCopyright(type="text" name="copyright" placeholder='[[YEARS]] = story active years; [[AUTHOR]] = author\'s name.' value=config.copyright required)
       label(for="configStartYear") First year of publication:
-      input#configStartYear(type="text" name="startYear" placeholder="YYYY" value=config.startYear)
+      input#configStartYear(type="text" name="startYear" placeholder="YYYY" value=config.startYear required)
+      h3 Subscription button messages
+      label(for="configSubscriptionAllLabel") All updates label:
+      input#configSubscriptionAllLabel(type="text" name="subscriptionAllLabel" value=config.subscription.all.label required)
+      label(for="configSubscriptionAllLink") All updates link:
+      input#configSubscriptionAllLink(type="url" name="subscriptionAllLink" value=config.subscription.all.link required)
+      label(for="configSubscriptionWeeklyLabel") Weekly updates label:
+      input#configSubscriptionWeeklyLabel(type="text" name="subscriptionWeeklyLabel" value=config.subscription.weekly.label required)
+      label(for="configSubscriptionAllLink") Weekly updates link:
+      input#configSubscriptionWeeklyLink(type="url" name="subscriptionWeeklyLink" value=config.subscription.weekly.link required)
+      label(for="configSubscriptionNoneLabel") No updates label:
+      input#configSubscriptionNoneLabel(type="text" name="subscriptionNoneLabel" value=config.subscription.none.label required)
       input(type="submit" value="Update Config")
       p.warning Warning: This will update these values across the entire site. There is no undo. If file changes are being watched, this will also restart the server.
   script.
