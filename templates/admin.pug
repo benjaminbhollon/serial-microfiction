@@ -24,6 +24,9 @@ block content
           p.no-indent: em Hits: #{flash.hits}
           .flash__content
             != md.render(flash.content)
+          if flash.type !== 'flash'
+            p.no-indent Type: #{flash.type}
+            p.no-indent Label: #{flash.label}
           p.no-indent
             a.error(href="./flash/" + flash._id.toString() + "/delete") Delete
             |
