@@ -9,18 +9,20 @@ function emailPrefs() {
 }
 
 // Hits
-const flashesRead = [];
+let flashesRead = [];
 
 async function hit(id) {
-  flashesRead.push(id);
-  $.post(`/flashes/${id}/hit/`);
+  if (flashesRead.indexOf(id) === -1) {
+    flashesRead.push(id);
+    $.post(`/flashes/${id}/hit/`);
+  }
 }
 
 async function scrolledOver(entries) {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       history.pushState({ date: entry.target.id }, document.title, `#${entry.target.id}`);
-      if (flashesRead.indexOf(entry.target.dataset.id) === -1) hit(entry.target.dataset.id);
+      hit(entry.target.dataset.id);
     }
   });
 }

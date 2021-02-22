@@ -38,6 +38,10 @@ article, section, header {
   padding: 0 0.75em;
 }
 
+summary {
+  cursor: pointer;
+}
+
 a {
   color: inherit;
 }

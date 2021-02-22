@@ -35,7 +35,7 @@ block content
       else if flash.type !== 'flash'
         article.non-flash(data-id=flash._id.toString() data-type=flash.type)
           details
-            summary #{flash.label}
+            summary(onclick='hit("' + flash._id.toString() +'")') #{flash.label}
             != md.render(flash.content)
     hr
     if (!cookies.choseSubscribe)
