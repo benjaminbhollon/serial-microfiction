@@ -12,17 +12,27 @@ block variables
     - releaseSchedule = "weekday"
 
 block append resources
+  link(href="/lib/homepage.css" rel="stylesheet")
   script(src="/lib/jquery.min.js" async)
   script(src="/lib/homepage.js" defer)
 
 block content
   #story
-    article#intro
+    section#intro
       p Greetings, and welcome to <em>#{config.title}</em>, a serial composed of microfiction by #{config.author.name}. What would you like to do today?
       ul
         li: a(href="#beginning") Start reading from the beginning
         li: a(href="#latest") Read the latest flash
         li: a(href="/about-the-author/") Learn more about #{config.author.name.split(" ")[0]}
+      h3 Display Options
+      h4.no-margin-bottom Theme
+      a#theme__light.theme__button(href="/display/theme/set/light") Light Mode
+      a#theme__dark.theme__button(href="/display/theme/set/dark") Dark Mode
+      a#theme__code.theme__button(href="/display/theme/set/code") Code Mode
+      h4.no-margin-bottom Font
+      a#font__sans.font__button(href="/display/font/set/sans") Sans Serif
+      a#font__serif.font__button(href="/display/font/set/serif") Serif
+      a#font__mono.font__button(href="/display/font/set/mono") Monospace
     hr#beginning
     each flash in flashes
       if flash.type === 'flash'

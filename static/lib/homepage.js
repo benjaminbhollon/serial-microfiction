@@ -9,7 +9,7 @@ function emailPrefs() {
 }
 
 // Hits
-let flashesRead = [];
+const flashesRead = [];
 
 async function hit(id) {
   if (flashesRead.indexOf(id) === -1) {

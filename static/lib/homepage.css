@@ -1,0 +1,30 @@
+/* Theme Buttons */
+.theme__button, .font__button {
+  font-size: 0;
+  display: inline-block;
+  height: 2.5rem;
+  width: 2.5rem;
+  border: 2px solid;
+  border-radius: 100%;
+  margin: 0.5rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.theme__button::after, .font__button::after {
+  content: 'abc';
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 2.2rem;
+  height: 100%;
+  width: 100%;
+}
+
+.theme__button {
+  background-color: var(--background-color);
+  color: var(--main-color);
+}
+
+.font__button {
+  font-family: var(--font-family)
+}

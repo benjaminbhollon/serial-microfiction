@@ -50,7 +50,7 @@ app.use((request, response, next) => {
       parameters: request.query,
       config,
       md,
-      cookies: request.cookes
+      cookies: request.cookies,
     });
   }
 
@@ -123,6 +123,22 @@ app.post('/flashes/:flashId/hit/', async (request, response) => {
   if (request.cookies.dontHit !== 'true') await crud.updateDocumentSpecial('flashes', { _id: ObjectId(request.params.flashId.toString()) }, { $inc: { hits: 1 } });
 
   return response.status(204).end();
+});
+
+app.get('/display/:setting/set/:value/', async (request, response) => {
+  const allowedSettings = {
+    theme: ['dark',
+      'light',
+      'code'],
+    font: ['sans',
+      'serif',
+      'mono'],
+  };
+  if (
+    allowedSettings[request.params.setting]
+    && allowedSettings[request.params.setting].indexOf(request.params.value) !== -1
+  ) response.cookie(request.params.setting, request.params.value);
+  response.redirect(302, '/');
 });
 
 // Listen on port from config.json
