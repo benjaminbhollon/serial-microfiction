@@ -118,10 +118,14 @@ label {
 
 /* Flashes */
 
-.flash {
+.flash, .non-flash {
   position: relative;
   line-height: 1.4em;
   margin: 2.5em 0;
+}
+
+.non-flash {
+  margin-top: -1.5em;
 }
 
 .flash p {

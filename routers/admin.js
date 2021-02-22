@@ -23,7 +23,7 @@ router.use(bodyParser.json());
 
 // Routes
 router.get('/', async (request, response) => {
-  // Get all unpublished flashes
+  // Get all flashes
   let unpublishedFlashes = [];
   let publishedFlashes = [];
   await crud.findMultipleDocuments('flashes', { date: { $gt: (new Date()).toISOString() } }).then((result) => {
@@ -40,6 +40,26 @@ router.get('/', async (request, response) => {
     md,
     cookies: request.cookies,
   });
+});
+
+router.post('/non-flash/', async (request, response) => {
+  // Get published flashes
+  let flashes = [];
+  await crud.findMultipleDocuments('flashes', { date: { $gt: (new Date()).toISOString() } }).then((result) => {
+    if (result !== null) flashes = result;
+  });
+
+  const flash = {
+    date: (request.body.date ? request.body.date : flashes[flashes.length - 1].date),
+    content: request.body.content,
+    type: request.body.type,
+    label: request.body.label,
+    hits: 0
+  }
+
+  await crud.insertDocument('flashes', flash);
+
+  response.redirect(302, '/admin/');
 });
 
 router.post('/flash/', async (request, response) => {
@@ -74,6 +94,7 @@ router.post('/flash/', async (request, response) => {
   const flash = {
     date: (request.body.date ? request.body.date : nextPostDue.toISOString().split('T')[0]),
     content: request.body.content,
+    type: 'flash',
     hits: 0,
   };
 
