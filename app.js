@@ -77,7 +77,7 @@ app.use('/admin/', adminRouter);
 app.get('/feed/', async (request, response) => {
   let flashes = [];
 
-  await crud.findMultipleDocuments('flashes', {type: 'flash'}).then((result) => {
+  await crud.findMultipleDocuments('flashes', { type: 'flash' }).then((result) => {
     flashes = result;
   });
 

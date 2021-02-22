@@ -12,7 +12,7 @@ const { ObjectId } = require('mongodb');
 const crud = require('../modules/crud');
 
 // Config
-let config = require('../config.json');
+const config = require('../config.json');
 
 const router = express.Router();
 
@@ -50,12 +50,12 @@ router.post('/non-flash/', async (request, response) => {
   });
 
   const flash = {
-    date: (request.body.date ? request.body.date : (flashes.length > 0 ? Date.now() : flashes[flashes.length - 1].date)),
+    date: (request.body.date ? request.body.date : flashes[flashes.length - 1].date),
     content: request.body.content,
     type: request.body.type,
     label: request.body.label,
-    hits: 0
-  }
+    hits: 0,
+  };
 
   await crud.insertDocument('flashes', flash);
 
@@ -104,7 +104,7 @@ router.post('/flash/', async (request, response) => {
 });
 
 router.post('/flash/:flashId/update', async (request, response) => {
-  await crud.updateDocument('flashes', {_id: ObjectId(request.params.flashId)}, {
+  await crud.updateDocument('flashes', { _id: ObjectId(request.params.flashId) }, {
     content: request.body.content,
     date: request.body.date,
   });
@@ -134,28 +134,28 @@ router.post('/config/update', async (request, response) => {
   config.author = {
     name: request.body.authorName,
     about: request.body.authorAbout,
-  }
+  };
   config.copyright = request.body.copyright;
   config.releasedOn = [];
-  for (let i = 0; i < 7; i++) {
-    if (request.body['releasedOn-' + i]) config.releasedOn.push(i);
+  for (let i = 0; i < 7; i += 1) {
+    if (request.body[`releasedOn-${i}`]) config.releasedOn.push(i);
   }
-  config.startYear = parseInt(request.body.startYear);
+  config.startYear = parseInt(request.body.startYear, 10);
   config.subscription = {
     all: {
       label: request.body.subscriptionAllLabel,
-      link: request.body.subscriptionAllLink
+      link: request.body.subscriptionAllLink,
     },
     weekly: {
       label: request.body.subscriptionWeeklyLabel,
-      link: request.body.subscriptionWeeklyLink
+      link: request.body.subscriptionWeeklyLink,
     },
     none: {
-      label: request.body.subscriptionNoneLabel
+      label: request.body.subscriptionNoneLabel,
     },
-  }
+  };
 
-  await fs.writeFile('./config.json', JSON.stringify(config, null, 2), (err) => {
+  await fs.writeFile('./config.json', JSON.stringify(config, null, 2), () => {
     response.redirect(302, '/admin/');
   });
 });
