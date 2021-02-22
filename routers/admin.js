@@ -50,7 +50,7 @@ router.post('/non-flash/', async (request, response) => {
   });
 
   const flash = {
-    date: (request.body.date ? request.body.date : flashes[flashes.length - 1].date),
+    date: (request.body.date ? request.body.date : (flashes.length > 0 ? Date.now() : flashes[flashes.length - 1].date)),
     content: request.body.content,
     type: request.body.type,
     label: request.body.label,
@@ -77,7 +77,7 @@ router.post('/flash/', async (request, response) => {
       return 0;
     });
   }
-  const lastPosted = new Date(flashes.length ? flashes[flashes.length - 1].date : Date.now());
+  const lastPosted = new Date(flashes.length ? flashes[flashes.length - 1].date : (new Date()).toISOString().split('T')[0]);
   const daysToAdd = (
     (config
       .releasedOn
