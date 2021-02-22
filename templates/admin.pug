@@ -36,6 +36,9 @@ block content
           p.no-indent: em Release date: <span class='date'>#{flash.date}</span>
           .flash__content
             != md.render(flash.content)
+          if flash.type !== 'flash'
+            p.no-indent Type: #{flash.type}
+            p.no-indent Label: #{flash.label}
           p.no-indent
             a.error(href="./flash/" + flash._id.toString() + "/delete") Delete
             |
@@ -54,12 +57,24 @@ block content
     h2 Add flash
     form(method="POST" action="./flash/")
       label(for="flashContent") Full text:
-      textarea(name="content" id="flashContent" placeholder="Add markdown, HTML, or a mix..." oninput="wordCount()" required)
+      textarea#flashContent(name="content" placeholder="Add markdown, HTML, or a mix..." oninput="wordCount()" required)
       p
         span#words 0
         |  words
       label(for="flashDate") Publish date:
-      input(type="text" name="date" id="flashDate" placeholder="yyyy-mm-dd (leave blank for default)")
+      input#flashDate(type="text" name="date" placeholder="yyyy-mm-dd (leave blank for default)")
+      input(type="submit" value="Add")
+  section
+    h2 Add non-flash content
+    form(method="POST" action="./non-flash/")
+      label(for="nonFlashType") Type:
+      input#nonFlashType(type="text" name="type" placeholder="hyphenated-plain-text" required)
+      label(for="nonFlashLabel") Label:
+      input#nonFlashLabel(type="text" name="label" placeholder="Plain text" required)
+      label(for="nonFlashContent") Full text:
+      textarea#nonFlashContent(name="content" placeholder="Add markdown, HTML, or a mix..." required)
+      label(for="nonFlashDate") Publish date:
+      input#flashDate(type="text" name="date" placeholder="yyyy-mm-dd (leave blank for default)")
       input(type="submit" value="Add")
   section
     h2#edit-flash Edit Flash
