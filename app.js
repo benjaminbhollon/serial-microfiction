@@ -46,7 +46,12 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use((request, response, next) => {
   if (directory[request.path] !== undefined) {
-    return response.render(directory[request.path], { parameters: request.query, config, md });
+    return response.render(directory[request.path], {
+      parameters: request.query,
+      config,
+      md,
+      cookies: request.cookes
+    });
   }
 
   if (next) return next();

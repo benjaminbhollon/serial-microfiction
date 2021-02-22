@@ -1,12 +1,57 @@
+/* Themes */
+:root, [data-theme='light'] {
+  --background-color: #fff;
+  --main-color: #000;
+}
+
+[data-theme='dark'] {
+  --background-color: #000;
+  --main-color: #fff;
+}
+
+[data-theme='code'] {
+  --background-color: #000;
+  --main-color: lime;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  [data-theme='prefer'] {
+    --background-color: #000;
+    --main-color: #fff;
+  }
+}
+
+@media print {
+  :root {
+    --background-color: #fff;
+    --main-color: #000;
+  }
+}
+
+/* Font-faces */
+:root, [data-font='sans'] {
+  --font-family: 'trebuchet ms',Calibri,sans-serif;
+}
+
+[data-font='serif'] {
+  --font-family: serif;
+}
+
+[data-font='mono'] {
+  --font-family: monospace
+}
+
+/* General Styles */
+
 * {
   box-sizing: border-box;
 }
 
 body {
   font-size: 1.3em;
-  font-family: Courier, monospace;
-  background-color: #000;
-  color: lime;
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--main-color);
   scroll-behavior: smooth;
   display: flex;
   flex-direction: column;
@@ -47,8 +92,8 @@ a {
 }
 
 ::selection {
-  background-color: lime;
-  color: #000;
+  background-color: var(--main-color);
+  color: var(--background-color);
 }
 
 /* Forms */
@@ -105,7 +150,7 @@ label {
   border-bottom: 2px solid;
   padding: 0.75em;
   font-size: 1.2em;
-  background-color: #000;
+  background-color: var(--background-color);
 }
 
 .main-nav a {

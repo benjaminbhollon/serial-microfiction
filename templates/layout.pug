@@ -1,5 +1,5 @@
 doctype html
-html(lang="en")
+html(lang="en" data-theme=(cookies.theme ? cookies.theme : 'prefer') data-font=(cookies.font ? cookies.font : 'sans'))
   head
     block head
       - metaImage = '/lib/images/default.png'
