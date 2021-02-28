@@ -2,22 +2,26 @@
 :root, [data-theme='light'], #theme__light {
   --background-color: #fff;
   --main-color: #000;
+  color-scheme: light;
 }
 
 [data-theme='dark'], #theme__dark {
   --background-color: #000;
   --main-color: #fff;
+  color-scheme: dark;
 }
 
 [data-theme='code'], #theme__code {
   --background-color: #000;
   --main-color: lime;
+  color-scheme: dark;
 }
 
 @media screen and (prefers-color-scheme: dark) {
   [data-theme='prefer'] {
     --background-color: #000;
     --main-color: #fff;
+    color-scheme: dark;
   }
 }
 

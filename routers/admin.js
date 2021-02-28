@@ -160,5 +160,5 @@ router.post('/config/update', async (request, response) => {
   });
 });
 
-// Routes
+// Export
 module.exports = router;

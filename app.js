@@ -127,12 +127,16 @@ app.post('/flashes/:flashId/hit/', async (request, response) => {
 
 app.get('/display/:setting/set/:value/', async (request, response) => {
   const allowedSettings = {
-    theme: ['dark',
+    theme: [
+      'dark',
       'light',
-      'code'],
-    font: ['sans',
+      'code',
+    ],
+    font: [
+      'sans',
       'serif',
-      'mono'],
+      'mono',
+    ],
   };
   if (
     allowedSettings[request.params.setting]
