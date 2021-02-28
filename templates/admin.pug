@@ -50,6 +50,7 @@ block content
             |
             a.warning(href="javascript:editFlash('" + flash._id.toString() + "')") Edit
     details
+    //-
       summary Stats
       ul
         li Published word count: #{publishedFlashes.length ? publishedFlashes.map(thisFlash => thisFlash.content).join('\n').split(/  \n| |\n\n/).length.toLocaleString('en-us') : 0}
