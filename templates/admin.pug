@@ -54,7 +54,7 @@ block content
         li Unpublished word count: #{unpublishedFlashes.length ? unpublishedFlashes.map(thisFlash => thisFlash.content).join('\n').split(/  \n| |\n\n/).length.toLocaleString('en-us') : 0}
         li Total hits: #{publishedFlashes.map(flash => flash.hits).reduce((a, b) => a + b, 0)}
         li Average hits: #{Math.round(publishedFlashes.map(flash => flash.hits).reduce((a, b) => a + b, 0) / publishedFlashes.length)}
-        //-- flashesUntil = publishedFlashes.concat(unpublishedFlashes)[publishedFlashes.concat(unpublishedFlashes).length - 1]?.date
+        - flashesUntil = publishedFlashes.concat(unpublishedFlashes)//-[publishedFlashes.concat(unpublishedFlashes).length - 1]?.date
         - flashesUntil = "2021-02-28"
         li Flashes supplied through: #{flashesUntil} (#{new Date(flashesUntil).getTime() < Date.now() ? 0 : Math.round((new Date(flashesUntil).getTime() - Date.now()) / (1000*60*60*24))} days from now)
   section
