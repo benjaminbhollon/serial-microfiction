@@ -16,8 +16,8 @@ block append head
 block content
   header: h1 Admin Dashboard
   section
-  //-
     details
+    //-
       summary Published Flashes (#{publishedFlashes.length.toLocaleString('en-us')})
       each flash in publishedFlashes
         article.flash(id='q' + flash._id.toString() data-md=flash.content)
@@ -34,6 +34,7 @@ block content
             |
             a.warning(href="javascript:editFlash('" + flash._id.toString() + "')") Edit
     details
+    //-
       summary Unpublished Flashes (#{unpublishedFlashes.length.toLocaleString('en-us')})
       each flash in unpublishedFlashes
         article.flash(id='q' + flash._id.toString() data-md=flash.content)
