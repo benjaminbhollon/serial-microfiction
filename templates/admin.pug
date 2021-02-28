@@ -48,9 +48,9 @@ block content
             |
             a.warning(href="javascript:editFlash('" + flash._id.toString() + "')") Edit
     details
-    //-
       summary Stats
       ul
+      //-
         li Published word count: #{publishedFlashes.length ? publishedFlashes.map(thisFlash => thisFlash.content).join('\n').split(/  \n| |\n\n/).length.toLocaleString('en-us') : 0}
         li Unpublished word count: #{unpublishedFlashes.length ? unpublishedFlashes.map(thisFlash => thisFlash.content).join('\n').split(/  \n| |\n\n/).length.toLocaleString('en-us') : 0}
         li Total hits: #{publishedFlashes.map(flash => flash.hits).reduce((a, b) => a + b, 0)}
