@@ -63,7 +63,7 @@ app.set('views', './templates');
 app.get('/', async (request, response) => {
   // Get all published flashes
   let flashes = [];
-  await crud.findMultipleDocuments('flashes', {/* date: {$lte: (new Date()).toISOString()} */}).then((result) => {
+  await crud.findMultipleDocuments('flashes', { date: {$lte: (new Date()).toISOString()} }).then((result) => {
     if (result !== undefined) flashes = result;
   });
 
