@@ -4,17 +4,11 @@ block variables
   - hardTitle = `${config.title} by ${config.author.name}`
   - metaDescription = config.synopsis
   - metaType = 'book'
-  - daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-  - releaseSchedule = config.releasedOn.map(day => (config.releasedOn[config.releasedOn.length - 1] === day && config.releasedOn.length > 1 ? "and " : "") + daysOfWeek[day]).join(", ")
-  if JSON.stringify(config.releasedOn) === "[0,1,2,3,4,5,6]"
-    - releaseSchedule = "day"
-  else if JSON.stringify(config.releasedOn) === "[1,2,3,4,5]"
-    - releaseSchedule = "weekday"
 
 block append resources
-  link(href="/lib/homepage.css" rel="stylesheet")
-  script(src="/lib/jquery.min.js" async)
-  script(src="/lib/homepage.js" defer)
+  link(href="/assets/homepage.css" rel="stylesheet")
+  script(src="/assets/jquery.min.js" async)
+  script(src="/assets/homepage.js" defer)
 
 block content
   #story
@@ -24,6 +18,7 @@ block content
         li: a(href="#beginning") Start reading from the beginning
         li: a(href="#latest") Read the latest flash
         li: a(href="/about-the-author/") Learn more about #{config.author.name.split(" ")[0]}
+      p.hide-noscript At any point, you can bookmark the page or copy the link to save your spot.
       h3 Display Options
       h4.no-margin-bottom Theme
       a#theme__light.theme__button(href="/display/theme/set/light") Light Mode
@@ -36,23 +31,24 @@ block content
     hr#beginning
     each flash in flashes
       if flash.type === 'flash'
+        if (flashes.filter(f => f.type === 'flash').slice(-1)[0] === flash)
+          span#latest
         article.flash(id=flash.date data-id=flash._id.toString() date-type='flash')
-          if flash === flashes[flashes.length - 1]
-            span#latest
           span.flash__date #{flash.date}
           != md.render(flash.content)
       else if flash.type !== 'flash'
-        article.non-flash(data-id=flash._id.toString() data-type=flash.type)
+        aside.non-flash(data-id=flash._id.toString() data-type=flash.type)
           details
             summary(onclick='hit("' + flash._id.toString() +'")') #{flash.label}
             != md.render(flash.content)
     hr
-    if (!cookies.choseSubscribe)
-      article#subscribe
-        p You've reached the end, but the story's not over. A new chunk of the story is released every #{releaseSchedule} (there's a countdown in the footer). Want to get notified when the next part of the story is released?
-        a.button(href=config.subscription.all.link data-freq='all' rel="noopener" target="_blank") #{config.subscription.all.label}
-        if (config.releasedOn.length > 1)
-          a.button(href=config.subscription.weekly.link data-freq='weekly' rel="noopener" target="_blank") #{config.subscription.weekly.label}
-        a.button(href="javascript:void(0)" data-freq='none') #{config.subscription.none.label}
-    else if (cookies.choseSubscribe)
-      article: p That's the entire story so far. Come back for a new chunk every #{releaseSchedule}! (there's a countdown in the footer)
+    article#subscribe
+      if (!cookies.choseSubscribe)
+          p You've reached the end, but the story's not over. A new chunk of the story is released every #{releaseSchedule} (there's a countdown in the footer). Want to get notified when the next part of the story is released?
+          a.button(href=config.subscription.all.link data-freq='all' rel="noopener" target="_blank") #{config.subscription.all.label}
+          if (config.releasedOn.length > 1)
+            a.button(href=config.subscription.weekly.link data-freq='weekly' rel="noopener" target="_blank") #{config.subscription.weekly.label}
+          a.button.hide-noscript(href="javascript:void(0)" data-freq='none') #{config.subscription.none.label}
+          noscript: p If you're not interested, no worries, that's okay. See you around!
+      else if (cookies.choseSubscribe)
+        p That's the entire story so far. Come back for a new chunk every #{releaseSchedule}! <span class="hide-noscript">(there's a countdown in the footer)</span>
