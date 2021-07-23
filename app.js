@@ -35,6 +35,15 @@ const directory = require('./directory.json');
 // Import local modules
 const crud = require('./modules/crud');
 
+// Initialize caches
+let caches = {
+  flashes: {
+    value: null,
+    expires: 0,
+    lifetime: 1000 * 30 // Cache lasts 30 seconds
+  }
+}
+
 const app = express();
 
 // Set up middleware
@@ -61,11 +70,20 @@ app.set('view engine', 'pug');
 app.set('views', './templates');
 
 app.get('/', async (request, response) => {
+
   // Get all published flashes
-  let flashes = [];
-  await crud.findMultipleDocuments('flashes', { date: {$lte: (new Date()).toISOString()} }).then((result) => {
-    if (result !== undefined) flashes = result;
-  });
+  let flashes = Date.now() > caches.flashes.expires ?
+    await crud.findMultipleDocuments('flashes', { date: { $lte: (new Date()).toISOString() } }) :
+    caches.flashes.value;
+
+  // Set cache if necessary
+  if (Date.now() > caches.flashes.expires) {
+    caches.flashes = {
+      value: flashes,
+      expires: Date.now() + caches.flashes.lifetime,
+      lifetime: caches.flashes.lifetime
+    }
+  }
 
   response.render('homepage', {
     config,

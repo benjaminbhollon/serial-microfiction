@@ -28,20 +28,21 @@ html(lang="en" data-theme=(cookies.theme ? cookies.theme : 'prefer') data-font=(
       block title
         title #{hardTitle == undefined ? title + " | " + config.title + " by " + config.author.name : hardTitle}
   body
-    noscript
-      style .hide-noscript {display: none!important}
-    span.hidden#releasedOn #{JSON.stringify(config.releasedOn)}
-    block navbar
-      nav.main-nav
-        a.main-nav__title(href="/") #{config.title}
-        a.main-nav__author(href="/about-the-author/") #{config.author.name}
-    #content
-      block content
-    a#scrollToTop.hidden(href='#top') &lt;
-    noscript: style #scrollToTop {display: inline-block!important;}
-    block footer
-      footer
-        p !{config.copyright.replace("[[YEARS]]", config.startYear !== new Date().getFullYear() ? config.startYear + "-" + (new Date()).getFullYear() : config.startYear).replace("[[AUTHOR]]", config.author.name)}
-        noscript: p new flashes released every #{releaseSchedule}
-        p.hide-noscript next flash in 
-          span#countdown
+    block body
+      noscript
+        style .hide-noscript {display: none!important}
+      span.hidden#releasedOn #{JSON.stringify(config.releasedOn)}
+      block navbar
+        nav.main-nav
+          a.main-nav__title(href="/") #{config.title}
+          a.main-nav__author(href="/about-the-author/") #{config.author.name}
+      #content
+        block content
+      a#scrollToTop.hidden(href='#top') &lt;
+      noscript: style #scrollToTop {display: inline-block!important;}
+      block footer
+        footer
+          p !{config.copyright.replace("[[YEARS]]", config.startYear !== new Date().getFullYear() ? config.startYear + "-" + (new Date()).getFullYear() : config.startYear).replace("[[AUTHOR]]", config.author.name)}
+          noscript: p new flashes released every #{releaseSchedule}
+          p.hide-noscript next flash in 
+            span#countdown

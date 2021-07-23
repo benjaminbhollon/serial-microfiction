@@ -9,6 +9,10 @@ block append resources
   link(href="/assets/homepage.css" rel="stylesheet")
   script(src="/assets/jquery.min.js" async)
   script(src="/assets/homepage.js" defer)
+  
+block prepend body
+  include ./mixins/flash.pug
+  include ./mixins/non-flash.pug
 
 block content
   #story
@@ -33,14 +37,9 @@ block content
       if flash.type === 'flash'
         if (flashes.filter(f => f.type === 'flash').slice(-1)[0] === flash)
           span#latest
-        article.flash(id=flash.date data-id=flash._id.toString() date-type='flash')
-          span.flash__date #{flash.date}
-          != md.render(flash.content)
+        +flash(flash)
       else if flash.type !== 'flash'
-        aside.non-flash(data-id=flash._id.toString() data-type=flash.type)
-          details
-            summary(onclick='hit("' + flash._id.toString() +'")') #{flash.label}
-            != md.render(flash.content)
+        +nonFlash(flash)
     hr
     article#subscribe
       if (!cookies.choseSubscribe)

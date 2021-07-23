@@ -1,0 +1,5 @@
+mixin nonFlash(item)
+  aside.non-flash(data-id=item._id.toString() data-type=item.type)
+    details
+      summary(onclick='hit("' + item._id.toString() +'")') #{item.label}
+      != md.render(item.content)

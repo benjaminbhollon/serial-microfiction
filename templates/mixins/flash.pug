@@ -1,0 +1,4 @@
+mixin flash(flash)
+  article.flash(id=flash.date data-id=flash._id.toString() date-type='flash')
+    span.flash__date #{flash.date}
+    != md.render(flash.content)
