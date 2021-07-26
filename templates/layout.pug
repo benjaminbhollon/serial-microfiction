@@ -11,10 +11,13 @@ html(lang="en" data-theme=(cookies.theme ? cookies.theme : 'prefer') data-font=(
         - releaseSchedule = "day"
       else if JSON.stringify(config.releasedOn) === "[1,2,3,4,5]"
         - releaseSchedule = "weekday"
+      else if config.releasedOn.length === 6
+        - releaseSchedule = "day except " + daysOfWeek[[0, 1, 2, 3, 4, 5, 6].find(d => config.releasedOn.indexOf(d) === -1)] + 's'
+      - releaseSchedule = "every " + releaseSchedule
       block variables
       block resources
         link(rel="stylesheet" href="/assets/global.css")
-        script(src="/assets/global.js" defer)
+        script(src="/assets/global.js" async)
       block meta
         meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
@@ -27,10 +30,13 @@ html(lang="en" data-theme=(cookies.theme ? cookies.theme : 'prefer') data-font=(
         meta(property="og:image" content=metaImage)
       block title
         title #{hardTitle == undefined ? title + " | " + config.title + " by " + config.author.name : hardTitle}
+      
+      noscript
+        style.
+          .hide-noscript {display: none!important}
+          #scrollToTop {display: inline-block!important;}
   body
     block body
-      noscript
-        style .hide-noscript {display: none!important}
       span.hidden#releasedOn #{JSON.stringify(config.releasedOn)}
       block navbar
         nav.main-nav
@@ -39,10 +45,9 @@ html(lang="en" data-theme=(cookies.theme ? cookies.theme : 'prefer') data-font=(
       #content
         block content
       a#scrollToTop.hidden(href='#top') &lt;
-      noscript: style #scrollToTop {display: inline-block!important;}
       block footer
         footer
           p !{config.copyright.replace("[[YEARS]]", config.startYear !== new Date().getFullYear() ? config.startYear + "-" + (new Date()).getFullYear() : config.startYear).replace("[[AUTHOR]]", config.author.name)}
-          noscript: p new flashes released every #{releaseSchedule}
+          noscript: p new flashes #{releaseSchedule}
           p.hide-noscript next flash in 
             span#countdown
