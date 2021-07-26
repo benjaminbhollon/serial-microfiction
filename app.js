@@ -36,13 +36,13 @@ const directory = require('./directory.json');
 const crud = require('./modules/crud');
 
 // Initialize caches
-let caches = {
+const caches = {
   flashes: {
     value: null,
     expires: 0,
-    lifetime: 1000 * 30 // Cache lasts 30 seconds
-  }
-}
+    lifetime: 1000 * 30, // Cache lasts 30 seconds
+  },
+};
 
 const app = express();
 
@@ -70,19 +70,26 @@ app.set('view engine', 'pug');
 app.set('views', './templates');
 
 app.get('/', async (request, response) => {
-
   // Get all published flashes
-  let flashes = Date.now() > caches.flashes.expires ?
-    await crud.findMultipleDocuments('flashes', { date: { $lte: (new Date()).toISOString() } }) :
-    caches.flashes.value;
+  let flashes = null;
 
   // Set cache if necessary
-  if (Date.now() > caches.flashes.expires) {
+  const d = new Date();
+  if (
+    Date.now() > caches.flashes.expires
+    || (d.getHours() * 60 * 60 * 1000)
+      + (d.getMinutes() * 60 * 1000)
+      + (d.getSeconds() * 1000)
+      < caches.flashes.lifetime
+  ) {
+    flashes = await crud.findMultipleDocuments('flashes', { date: { $lte: (new Date()).toISOString() } });
     caches.flashes = {
       value: flashes,
       expires: Date.now() + caches.flashes.lifetime,
-      lifetime: caches.flashes.lifetime
-    }
+      lifetime: caches.flashes.lifetime,
+    };
+  } else {
+    flashes = caches.flashes.value;
   }
 
   response.render('homepage', {
@@ -165,5 +172,5 @@ app.get('/display/:setting/set/:value/', async (request, response) => {
 
 // Listen on port from config.json
 app.listen(config.port, () => {
-  console.log(`Server running on port ${config.port}`);
+  console.info(`Server running on port ${config.port}`);
 });

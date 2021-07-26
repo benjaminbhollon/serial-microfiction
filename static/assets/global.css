@@ -1,3 +1,11 @@
+/* Variables */
+:root {
+  --serif: Garamond, Georgia, serif;
+  --sans: 'trebuchet ms',Calibri,sans-serif;
+  --mono: monospace;
+  --font-size: 1.3em;
+}
+
 /* Themes */
 :root, [data-theme='light'], #theme__light {
   --background-color: #fff;
@@ -6,7 +14,7 @@
 }
 
 [data-theme='dark'], #theme__dark {
-  --background-color: #333;
+  --background-color: #252525;
   --main-color: snow;
   color-scheme: dark;
 }
@@ -19,7 +27,7 @@
 
 @media screen and (prefers-color-scheme: dark) {
   [data-theme='prefer'] {
-    --background-color: #333;
+    --background-color: #252525;
     --main-color: snow;
     color-scheme: dark;
   }
@@ -34,21 +42,21 @@
 
 /* Font-faces */
 :root, [data-font='serif'], #font__serif {
-  --font-family: Garamond, Georgia, serif;
+  --font-family: var(--serif);
 }
 
 [data-font='sans'], #font__sans {
-  --font-family: 'trebuchet ms',Calibri,sans-serif;
+  --font-family: var(--sans);
 }
 
 [data-font='mono'], #font__mono {
-  --font-family: monospace
+  --font-family: var(--mono);
 }
 
 /* General Styles */
 
 body {
-  font-size: 1.3em;
+  font-size: var(--font-size);
   font-family: var(--font-family);
   background-color: var(--background-color);
   color: var(--main-color);

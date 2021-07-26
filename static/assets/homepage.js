@@ -21,6 +21,8 @@ async function hit(id) {
 async function scrolledOver(entries) {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
+      // localStorage.setItem('currentlyReading', entry.target.id);
+
       history.pushState({ date: entry.target.id }, document.title, `#${entry.target.id}`);
       hit(entry.target.dataset.id);
     }
