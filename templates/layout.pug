@@ -12,7 +12,7 @@ html(lang="en" data-theme=(cookies.theme ? cookies.theme : 'prefer') data-font=(
       else if JSON.stringify(config.releasedOn) === "[1,2,3,4,5]"
         - releaseSchedule = "weekday"
       else if config.releasedOn.length === 6
-        - releaseSchedule = "day except " + daysOfWeek[[0, 1, 2, 3, 4, 5, 6].find(d => config.releasedOn.indexOf(d) === -1)] + 's'
+        - releaseSchedule = "day except on " + daysOfWeek[[0, 1, 2, 3, 4, 5, 6].find(d => config.releasedOn.indexOf(d) === -1)] + 's'
       - releaseSchedule = "every " + releaseSchedule
       block variables
       block resources
@@ -50,4 +50,4 @@ html(lang="en" data-theme=(cookies.theme ? cookies.theme : 'prefer') data-font=(
           p !{config.copyright.replace("[[YEARS]]", config.startYear !== new Date().getFullYear() ? config.startYear + "-" + (new Date()).getFullYear() : config.startYear).replace("[[AUTHOR]]", config.author.name)}
           noscript: p new flashes #{releaseSchedule}
           p.hide-noscript next flash in 
-            span#countdown
+            span#countdown a little while

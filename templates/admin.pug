@@ -19,7 +19,7 @@ block content
     details
       summary Published Flashes (#{publishedFlashes.length.toLocaleString('en-us')})
       each flash in publishedFlashes
-        article.flash(id='q' + flash._id.toString() data-md=flash.content)
+        article(id='q' + flash._id.toString() data-md=flash.content class=(flash.type === 'flash' ? 'flash' : 'non-flash'))
           p.no-indent: em Release date: <span class='date'>#{flash.date}</span>
           p.no-indent: em Hits: #{flash.hits}
           .flash__content
@@ -59,19 +59,19 @@ block content
         unless publishedFlashes.concat(unpublishedFlashes).length > 0
           - flashesUntil = (new Date()).toISOString().split('T')[0]
         li Flashes supplied through: #{flashesUntil} (#{new Date(flashesUntil).getTime() < Date.now() ? 0 : Math.round((new Date(flashesUntil).getTime() - Date.now()) / (1000*60*60*24))} days from now)
-  section
-    h2 Add flash
+  section: details
+    summary Add Flash
     form(method="POST" action="./flash/")
-      label(for="flashContent") Full text:
-      textarea#flashContent(name="content" placeholder="Add markdown, HTML, or a mix..." oninput="wordCount()" required)
-      p
-        span#words 0
-        |  words
-      label(for="flashDate") Publish date:
-      input#flashDate(type="text" name="date" placeholder="yyyy-mm-dd (leave blank for default)")
-      input(type="submit" value="Add")
-  section
-    h2 Add non-flash content
+    label(for="flashContent") Full text:
+    textarea#flashContent(name="content" placeholder="Add markdown, HTML, or a mix..." oninput="wordCount()" required)
+    p
+      span#words 0
+      |  words
+    label(for="flashDate") Publish date:
+    input#flashDate(type="text" name="date" placeholder="yyyy-mm-dd (leave blank for default)")
+    input(type="submit" value="Add")
+  section: details
+    summary Add non-flash content
     form(method="POST" action="./non-flash/")
       label(for="nonFlashType") Type:
       input#nonFlashType(type="text" name="type" placeholder="hyphenated-plain-text" required)
@@ -82,8 +82,8 @@ block content
       label(for="nonFlashDate") Publish date:
       input#flashDate(type="text" name="date" placeholder="yyyy-mm-dd (leave blank for default)")
       input(type="submit" value="Add")
-  section
-    h2#edit-flash Edit Flash
+  section: details#edit-flash
+    summary Edit Flash
     p Click "Edit" on a flash above to edit it here.
     form#edit-flash__form.hidden(method="POST")
       label(for="flashContent--edit") Full text:
@@ -91,11 +91,11 @@ block content
       label(for="flashDate--edit") Publish date:
       input(type="text" name="date" id="flashDate--edit" placeholder="yyyy-mm-dd" required)
       input(type="submit" value="Update")
-  section
-    h2 Analytics
+  section: details
+    summary Analytics
     a.button(href="/admin/cookie/dontHit/toggle") #{cookies.dontHit === 'true' ? 'Track my Hits' : 'Ignore my Hits'}
-  section
-    h2 Site Configuration
+  section: details
+    summary Site Configuration
     - daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     form(method="POST" action="/admin/config/update")
       label(for="configTitle") Book title:
@@ -131,7 +131,7 @@ block content
       label(for="configSubscriptionNoneLabel") No updates label:
       input#configSubscriptionNoneLabel(type="text" name="subscriptionNoneLabel" value=config.subscription.none.label required)
       input(type="submit" value="Update Config")
-      p.warning Warning: This will update these values across the entire site. There is no undo. If file changes are being watched, this will also restart the server.
+      p.warning Warning: This will update these values across the entire site. There is no undo. The server will need to be restarted for the changes to be applied.
   script.
     function wordCount() {
       document.getElementById("words").innerText = document.getElementById("flashContent").value.length ? document.getElementById("flashContent").value.split(/  \n| |\n\n/).length.toLocaleString('en-us') : 0;
@@ -142,5 +142,6 @@ block content
       document.getElementById('flashContent--edit').innerHTML = document.getElementById('q' + id).dataset.md;
       document.getElementById('flashDate--edit').value = document.querySelector(`#q${id} .date`).innerText;
       form.style.display = 'block';
+      document.getElementById('edit-flash').open = 'true';
       location.href = '#edit-flash__form';
     }

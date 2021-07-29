@@ -9,7 +9,7 @@ block append resources
   link(href="/assets/homepage.css" rel="stylesheet")
   script(src="/assets/jquery.min.js" async)
   script(src="/assets/homepage.js" defer)
-  
+
 block prepend body
   include ./mixins/flash.pug
   include ./mixins/non-flash.pug
@@ -38,7 +38,7 @@ block content
     hr
     article#subscribe
       if (!cookies.choseSubscribe)
-          p You've reached the end, but the story's not over. A new chunk of the story (or "flash") is released #{releaseSchedule} (there's a countdown in the footer). Want to get notified when the next part of the story is released?
+          p You've reached the end, but the story's not over. A new chunk of the story (or "flash") is released #{releaseSchedule}<span class="hide-noscript"> (there's a countdown in the footer)</span>. Want to get notified when the next part of the story is released?
           a.button(href=config.subscription.all.link data-freq='all' rel="noopener" target="_blank") #{config.subscription.all.label}
           if (config.releasedOn.length > 1)
             a.button(href=config.subscription.weekly.link data-freq='weekly' rel="noopener" target="_blank") #{config.subscription.weekly.label}

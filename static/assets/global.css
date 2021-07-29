@@ -199,7 +199,7 @@ label {
   margin-top: 0;
 }
 
-.flash p:not(h2 + p):first-of-type::first-letter {
+.flash p:not(h2 + p):not(.no-indent):first-of-type::first-letter {
   font-size: 1.5em;
   line-height: 0;
 }
@@ -207,17 +207,13 @@ label {
 .flash__date {
   opacity: 0.7;
   position: absolute;
-  right: -175px;
-  width: 175px;
+  right: 0px;
+  width: 0px;
   padding-left: 1em;
   display: none;
 }
 
-[data-latest] {
-  background-color: #222
-}
-
-@media (min-width: 910px) {
+@media (min-width: 810px) {
   .flash__date {
     display: inline;
   }
