@@ -91,9 +91,12 @@ hr {
   flex: 1 0 auto;
 }
 
+article, aside, section, header, footer {
+  padding: 0 1rem;
+}
+
 article, aside, section, header {
   max-width: 650px;
-  padding: 0 1rem;
 }
 
 summary {
@@ -107,6 +110,10 @@ a {
 ::selection {
   background-color: var(--main-color);
   color: var(--background-color);
+}
+
+img {
+  max-width: 100%;
 }
 
 /* Forms */
@@ -140,6 +147,7 @@ textarea {
 }
 
 a.button {
+  width: initial;
   text-align: center;
   text-decoration: none;
 }
