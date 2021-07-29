@@ -20,10 +20,14 @@ block content
     section#intro
       p Greetings, and welcome to <em>#{config.title}</em>, a serial composed of microfiction by #{config.author.name}. What would you like to do today?
       ul
-        li: a(href="#beginning") Start reading from the beginning
+        li
+          a(href="#beginning") Start reading from the beginning
+          | (or just scroll down)
         li: a(href="#latest") Read the latest flash
         li: a(href="/about-the-author/") Learn more about #{config.author.name.split(" ")[0]}
       p.hide-noscript At any point, you can bookmark the page or copy the link to save your spot.
+      h3 Synopsis
+      != md.render(config.synopsis)
       h3 Display Options
       +themeOptions
       +fontOptions
@@ -37,12 +41,17 @@ block content
         +nonFlash(flash)
     hr
     article#subscribe
-      if (!cookies.choseSubscribe)
-          p You've reached the end, but the story's not over. A new chunk of the story (or "flash") is released #{releaseSchedule}<span class="hide-noscript"> (there's a countdown in the footer)</span>. Want to get notified when the next part of the story is released?
-          a.button(href=config.subscription.all.link data-freq='all' rel="noopener" target="_blank") #{config.subscription.all.label}
-          if (config.releasedOn.length > 1)
-            a.button(href=config.subscription.weekly.link data-freq='weekly' rel="noopener" target="_blank") #{config.subscription.weekly.label}
-          a.button.hide-noscript(href="javascript:void(0)" data-freq='none') #{config.subscription.none.label}
-          noscript: p If you're not interested, no worries, that's okay. See you around!
-      else if (cookies.choseSubscribe)
-        p That's the entire story so far. Come back for a new chunk every #{releaseSchedule}! <span class="hide-noscript">(there's a countdown in the footer)</span>
+      if (config.finished.status)
+        p!= config.finished.message.replace(/\[\[TITLE\]\]/g, config.title)
+        p — #{config.author.name}
+      else
+        if (!cookies.choseSubscribe)
+            p You've reached the end, but the story's not over. A new chunk of the story (or "flash") is released #{releaseSchedule}<span class="hide-noscript"> (there's a countdown in the footer)</span>. Want to get notified when the next part of the story is released?
+            a.button(href=config.subscription.all.link data-freq='all' rel="noopener" target="_blank") #{config.subscription.all.label}
+            if (config.releasedOn.length > 1)
+              a.button(href=config.subscription.weekly.link data-freq='weekly' rel="noopener" target="_blank") #{config.subscription.weekly.label}
+            a.button.hide-noscript(href="javascript:void(0)" data-freq='none') #{config.subscription.none.label}
+            noscript: p If you're not interested, no worries, that's okay. See you around!
+        else
+          p That's the entire story so far. Come back for a new chunk every #{releaseSchedule}! <span class="hide-noscript">(there's a countdown in the footer)</span>
+        p There's an <a href="/feed/" target="_blank">RSS Feed</a> in case you're one of those cool people who likes those!

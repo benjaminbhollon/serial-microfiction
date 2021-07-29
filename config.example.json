@@ -31,5 +31,10 @@
     "none": {
       "label": "Nope, I'm good. Thanks for asking, though."
     }
+  },
+  
+  "finished": {
+    "status": false,
+    "message": "You've reached the end of <em>[[TITLE]]</em>. Thank you so much for reading, it means a lot!"
   }
 }
