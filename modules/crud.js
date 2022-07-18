@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb'); // Import MongoDB
 const config = require('../config.json');
 
-const dbName = 'sm-core';
+const dbName = config.mognodbDatabase;
 
 // Create document
 exports.insertDocument = async function insertDocument(collection, value) {

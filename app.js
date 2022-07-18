@@ -1,5 +1,6 @@
 // Import modules
 const express = require('express');
+const basicAuth = require('express-basic-auth');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -49,6 +50,7 @@ const app = express();
 // Set up middleware
 app.use(cookieParser());
 app.use(compression());
+app.use('/admin/', basicAuth({ users: config.admins, challenge: true }));
 app.use(express.static('static'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

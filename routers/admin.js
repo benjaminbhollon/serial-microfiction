@@ -17,7 +17,6 @@ const config = require('../config.json');
 const router = express.Router();
 
 // Middleware
-router.use(basicAuth({ users: config.admins, challenge: true }));
 router.use(express.json());
 router.use(bodyParser.json());
 

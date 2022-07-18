@@ -1,8 +1,8 @@
 {
   "mongodbURI": "mongodb://localhost:27017",
-  "admins": [
-    {"admin": "letmein"}
-  ],
+  "admins": {
+    "admin": "letmein"
+  },
   "port": 80,
 
   "title": "The Adventures of Sir Avocado",
@@ -32,7 +32,7 @@
       "label": "Nope, I'm good. Thanks for asking, though."
     }
   },
-  
+
   "finished": {
     "status": false,
     "message": "You've reached the end of <em>[[TITLE]]</em>. Thank you so much for reading, it means a lot!"
